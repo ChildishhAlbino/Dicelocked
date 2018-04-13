@@ -8,6 +8,7 @@ The game uses RPS mechanics where Rogues beat Mages who beat Warriors who beat R
 Each classes contains 3 types which change the playstyle:
 
 Rogues:
+
   Assassins - standard rogue class, can attack from range but only in a straight line and only in one plane. They can only attack the
   first person in the plane they strike in.
   
@@ -18,6 +19,7 @@ Rogues:
   a target, your turn is over.
   
 Warriors:
+
   Swordsmen - generic "knight" character, can attack any space on the opposing field but they must be in the front row of the field
   they are on (and they cannot attack backwards) to compensate, they can defend any piece that is standing behind them.
   
@@ -28,12 +30,13 @@ Warriors:
   unit hit. However, that also causes it to take massive damage in return.
   
 Mages:
+
   Sorcerors - typical mage class; can use spells to deal A.O.E damage but can only attack once per turn.
   
   Alchemists - can convert other units into different classes or buff them with bonuses, but cannot deal super effective damage 
   to other classes.
   
-  Battle Mages - use magic to amplify their physical stats - they always deal super effective damage and take ineffectivce damage from all
-  units except other battle mages.
+  Battle Mages - use magic to amplify their physical stats - they always deal super effective damage and take ineffectivce damage from 
+  all units except other battle mages.
   
   
