@@ -9,5 +9,7 @@ namespace Stacked_Grid_Client.Commands
     public interface ICommandHandler<U>        
     {
         void handle(ICommand<U> command);
+
+        
     }
 }

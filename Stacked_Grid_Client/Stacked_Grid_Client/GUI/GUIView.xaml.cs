@@ -22,14 +22,52 @@ namespace Stacked_Grid_Client
     /// </summary>
     public partial class GUIView : Window, IView, IComponent<GUIView, Controller>
     {
+        private ICommandHandler<Controller> commandHandler;
         public GUIView()
         {
+            Controller controller = new Controller();
+            controller.CommandHandler = this;
+            this.CommandHandler = controller;
             InitializeComponent();
         }
+        
 
-        public ICommandHandler<Controller> CommandHandler { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICommandHandler<Controller> CommandHandler
+        {
+            get
+            {
+                return commandHandler;
+            }
+
+            set
+            {
+                commandHandler = value;
+            }
+        }
 
         public void handle(ICommand<GUIView> command)
+        {
+            if (!(command is null))
+            {
+                if (command.execution(this) != Result.success)
+                {
+                    //error
+                    //do something
+                }
+            }
+        }
+
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            commandHandler.handle(new AddIntCommand((ContentControl)sender));
+        }
+
+        public void UpdateGUI()
+        {
+           
+        }
+
+        public void UpdateElementContent(ContentControl element, string content)
         {
             throw new NotImplementedException();
         }

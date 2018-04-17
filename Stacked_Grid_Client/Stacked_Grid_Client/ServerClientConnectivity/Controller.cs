@@ -10,15 +10,34 @@ namespace Stacked_Grid_Client.ServerClientConncetivity
 {
     public class Controller : IComponent<Controller, GUIView>, IServerClientConnectivity
     {
+        private ICommandHandler<GUIView> commandHandler;
         public ICommandHandler<GUIView> CommandHandler
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get
+            {
+                return commandHandler;
+            }
+
+            set
+            {
+                commandHandler = value;
+            }
+        }
+
+        public ICommandHandler<Controller> GetCommandHandler()
+        {
+            throw new NotImplementedException();
         }
 
         public void handle(ICommand<Controller> command)
         {
-            throw new NotImplementedException();
+            if(!(command is null))
+            {
+                if (command.execution(this) == Result.success)
+                {
+                    CommandHandler.handle(new UpdateViewCommand());
+                }             
+            } 
         }
     }
 }

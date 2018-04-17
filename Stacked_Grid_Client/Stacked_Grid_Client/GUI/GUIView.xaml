@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Stacked_Grid_Client"
         mc:Ignorable="d"
-        Title="GUIView" Height="300" Width="300">
+        Title="GUIView" Height="500" Width="500">
     <Grid>
-        
+        <Button x:Name="Button" Width="200" Height="50" Content="Press Me" Click="OnButtonClick"></Button>
     </Grid>
 </Window>
