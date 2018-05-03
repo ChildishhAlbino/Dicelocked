@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Stacked_Grid_Client.Commands
 {
-    public interface IComponent<U, K> : ICommandHandler<U>   
+    public interface IComponent<U> : ICommandHandler<U>   
     {
-        ICommandHandler<K> CommandHandler
-        {
-            get;
-            set;
-        }
+
     }
 }

@@ -20,7 +20,7 @@ namespace Stacked_Grid_Client
     /// <summary>
     /// Interaction logic for GUIView.xaml
     /// </summary>
-    public partial class GUIView : Window, IView, IComponent<GUIView, Controller>
+    public partial class GUIView : Window, IView, ICommandHandler<GUIView>
     {
         private ICommandHandler<Controller> commandHandler;
         public GUIView()

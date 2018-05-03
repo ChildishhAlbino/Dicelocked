@@ -8,7 +8,7 @@ using Stacked_Grid_Client.GUI;
 
 namespace Stacked_Grid_Client.ServerClientConncetivity
 {
-    public class Controller : IComponent<Controller, GUIView>, IServerClientConnectivity
+    public class Controller : IComponent<Controller>, IServerClientConnectivity
     {
         private ICommandHandler<GUIView> commandHandler;
         public ICommandHandler<GUIView> CommandHandler
@@ -22,11 +22,6 @@ namespace Stacked_Grid_Client.ServerClientConncetivity
             {
                 commandHandler = value;
             }
-        }
-
-        public ICommandHandler<Controller> GetCommandHandler()
-        {
-            throw new NotImplementedException();
         }
 
         public void handle(ICommand<Controller> command)
