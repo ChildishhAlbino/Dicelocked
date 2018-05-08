@@ -20,9 +20,9 @@ namespace Stacked_Grid_Client
     /// <summary>
     /// Interaction logic for GUIView.xaml
     /// </summary>
-    public partial class GUIView : Window, IView, ICommandHandler<GUIView>
+    public partial class GUIView : Window, IView, ICommandHandler<ViewCommand>
     {
-        private ICommandHandler<Controller> commandHandler;
+        private ICommandHandler<ControlCommands> commandHandler;
         public GUIView()
         {
             Controller controller = new Controller();
@@ -32,7 +32,7 @@ namespace Stacked_Grid_Client
         }
         
 
-        public ICommandHandler<Controller> CommandHandler
+        public ICommandHandler<ControlCommands> CommandHandler
         {
             get
             {
@@ -47,14 +47,7 @@ namespace Stacked_Grid_Client
 
         public void handle(ICommand<GUIView> command)
         {
-            if (!(command is null))
-            {
-                if (command.execution(this) != Result.success)
-                {
-                    //error
-                    //do something
-                }
-            }
+         
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
@@ -70,6 +63,18 @@ namespace Stacked_Grid_Client
         public void UpdateElementContent(ContentControl element, string content)
         {
             throw new NotImplementedException();
+        }
+
+        public void handle(ViewCommand command)
+        {
+            if (!(command is null))
+            {
+                if (command.execution(this) != Result.success)
+                {
+                    //error
+                    //do something
+                }
+            }
         }
     }
 }

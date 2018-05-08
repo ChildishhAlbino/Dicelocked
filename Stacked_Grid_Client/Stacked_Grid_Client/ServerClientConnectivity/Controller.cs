@@ -8,10 +8,10 @@ using Stacked_Grid_Client.GUI;
 
 namespace Stacked_Grid_Client.ServerClientConncetivity
 {
-    public class Controller : IComponent<Controller>, IServerClientConnectivity
+    public class Controller : ICommandHandler<ControlCommands>, IServerClientConnectivity
     {
-        private ICommandHandler<GUIView> commandHandler;
-        public ICommandHandler<GUIView> CommandHandler
+        private ICommandHandler<ViewCommand> commandHandler;
+        public ICommandHandler<ViewCommand> CommandHandler
         {
             get
             {
@@ -24,15 +24,20 @@ namespace Stacked_Grid_Client.ServerClientConncetivity
             }
         }
 
-        public void handle(ICommand<Controller> command)
+        public ICommandHandler<Controller> GetCommandHandler()
         {
-            if(!(command is null))
+            throw new NotImplementedException();
+        }
+
+        public void handle(ControlCommands command)
+        {
+            if (!(command is null))
             {
                 if (command.execution(this) == Result.success)
                 {
                     CommandHandler.handle(new UpdateViewCommand());
-                }             
-            } 
+                }
+            }
         }
     }
 }

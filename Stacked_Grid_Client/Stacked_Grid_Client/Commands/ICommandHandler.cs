@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Stacked_Grid_Client.Commands
 {
-    public interface ICommandHandler<U>        
+    public interface ICommandHandler<U>
     {
-        void handle(ICommand<U> command);
+        void handle(U command);
 
         
     }
