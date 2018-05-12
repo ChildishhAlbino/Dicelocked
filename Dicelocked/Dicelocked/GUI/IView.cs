@@ -11,6 +11,6 @@ namespace Client.GUI
     {
         void UpdateGUI();
 
-        void UpdateElementContent(ContentControl element, string content);
+        void UpdateButtonContent(Button button, string content);
     }
 }

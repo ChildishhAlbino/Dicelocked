@@ -30,7 +30,6 @@ namespace Client
             this.CommandHandler = controller;
             InitializeComponent();
         }
-        
 
         public ICommandHandler<ControlCommands> CommandHandler
         {
@@ -44,15 +43,18 @@ namespace Client
                 commandHandler = value;
             }
         }
-
-        public void handle(ICommand<GUIView> command)
-        {
-         
-        }
-
+ 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            commandHandler.handle(new AddIntCommand((ContentControl)sender));
+            if(sender is Button)
+            {
+                Button button = (Button)sender;
+                CommandHandler.handle(new AddIntCommand(button));
+            }
+            else
+            {
+                Console.WriteLine("shit has hit the fan");
+            }
         }
 
         public void UpdateGUI()
@@ -75,6 +77,11 @@ namespace Client
                     //do something
                 }
             }
+        }
+
+        public void UpdateButtonContent(Button button, string content)
+        {
+            button.Content = content;
         }
     }
 }

@@ -18,20 +18,20 @@ namespace Client.Commands
 
     public class AddIntCommand : ControlCommands
     {
-        private ContentControl element;
-        public AddIntCommand(ContentControl element)
+        private Button button;
+        public AddIntCommand(Button button)
         {
-            this.element = element;
+            this.button = button;
         }
 
         private static int count = 0;
 
         public override Result execution(Controller commandHandler)
         {
-            if(element != null)
+            if(button != null)
             {
                 count++;
-                commandHandler.CommandHandler.handle(new UpdateButtonText($"Button has been pressed {count} time(s)", element));
+                commandHandler.CommandHandler.handle(new UpdateButtonText($"Button has been pressed {count} time(s)", button));
             }
             return Result.success;
         }  

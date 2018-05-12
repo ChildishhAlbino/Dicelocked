@@ -22,6 +22,7 @@ namespace Client.Commands
     {
         public override Result execution(GUIView commandHandler)
         {
+            commandHandler.UpdateGUI();
             return Result.success;
         }
     }
@@ -29,16 +30,16 @@ namespace Client.Commands
     public class UpdateButtonText : ViewCommand
     {
         string buttonText;
-        ContentControl element;
-        public UpdateButtonText(string buttonText, ContentControl element)
+        Button button;
+        public UpdateButtonText(string buttonText, Button button)
         {
             this.buttonText = buttonText;
-            this.element = element;
+            this.button = button;
         }
 
         public override Result execution(GUIView commandHandler)
         {
-            element.Content = buttonText;
+            commandHandler.UpdateButtonContent(button, buttonText);
             return Result.success;
         }
     }
