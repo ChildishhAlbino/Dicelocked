@@ -1,4 +1,4 @@
-# Stacked-Grid-client-
+# Dicelocked
 The client for a game I am developing for a TAFE assessment.
 
 The game contains two 3x3 grids where each player can places pieces that fall into one of three classes; Rogues, Warriors, and Mages.
