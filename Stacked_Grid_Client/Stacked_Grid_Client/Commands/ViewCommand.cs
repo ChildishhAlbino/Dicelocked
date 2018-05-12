@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,6 @@ namespace Stacked_Grid_Client.Commands
     {
         public override Result execution(GUIView commandHandler)
         {
-
             return Result.success;
         }
     }
