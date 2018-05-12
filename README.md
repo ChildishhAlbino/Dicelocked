@@ -38,5 +38,12 @@ Mages:
   
   Battle Mages - use magic to amplify their physical stats - they always deal super effective damage and take ineffectivce damage from 
   all units except other battle mages.
+
+Players obtain pieces by rolling a 6-die from their "hand" (each player starts with 3 die) which are randomly distributed to the player from a deck of 20 (once all 20 are used they are recycled). 
+The die have a major class, minor class, and a counter class. 
+  The major class can be any of the 3 main classes in the game. There are 3 major sides on a die.
+  The minor class is the class that is weak to the major. There are 2 minor sides on a die.
+  The counter class is the remaining class not already on the die. There is only 1 counter side on the die.
   
+"Dice decks" will allow a player to specialise what class they want to, and to what extent, specialise for  
   
