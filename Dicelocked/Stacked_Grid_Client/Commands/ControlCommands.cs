@@ -1,4 +1,4 @@
-﻿using Stacked_Grid_Client.ServerClientConncetivity;
+﻿using Client.ServerClientConncetivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Stacked_Grid_Client.Commands
+namespace Client.Commands
 {
     public abstract class ControlCommands : ICommand<Controller>
     {

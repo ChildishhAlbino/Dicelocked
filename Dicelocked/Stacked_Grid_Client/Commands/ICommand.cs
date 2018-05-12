@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stacked_Grid_Client.Commands
+namespace Client.Commands
 {
     public enum Result
     {

@@ -1,6 +1,6 @@
-﻿using Stacked_Grid_Client.Commands;
-using Stacked_Grid_Client.GUI;
-using Stacked_Grid_Client.ServerClientConncetivity;
+﻿using Client.Commands;
+using Client.GUI;
+using Client.ServerClientConncetivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Stacked_Grid_Client
+namespace Client
 {
     /// <summary>
     /// Interaction logic for GUIView.xaml

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Stacked_Grid_Client.GUI
+namespace Client.GUI
 {
     public interface IView
     {

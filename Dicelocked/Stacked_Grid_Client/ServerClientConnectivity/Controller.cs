@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Stacked_Grid_Client.Commands;
-using Stacked_Grid_Client.GUI;
+using Client.Commands;
+using Client.GUI;
 
-namespace Stacked_Grid_Client.ServerClientConncetivity
+namespace Client.ServerClientConncetivity
 {
     public class Controller : ICommandHandler<ControlCommands>, IServerClientConnectivity
     {
@@ -22,11 +22,6 @@ namespace Stacked_Grid_Client.ServerClientConncetivity
             {
                 commandHandler = value;
             }
-        }
-
-        public ICommandHandler<Controller> GetCommandHandler()
-        {
-            throw new NotImplementedException();
         }
 
         public void handle(ControlCommands command)

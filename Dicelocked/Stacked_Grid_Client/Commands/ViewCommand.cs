@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Stacked_Grid_Client.GUI;
-using Stacked_Grid_Client.ServerClientConncetivity;
+using Client.GUI;
+using Client.ServerClientConncetivity;
 
-namespace Stacked_Grid_Client.Commands
+namespace Client.Commands
 {
     public abstract class ViewCommand : ICommand<GUIView>
     {
