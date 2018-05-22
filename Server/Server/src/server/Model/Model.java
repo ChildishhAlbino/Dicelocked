@@ -5,17 +5,37 @@
  */
 package server.Model;
 
-import server.Commands.ICommandHandler;
-import server.Commands.ModelCommand;
+import server.Commands.*;
+import server.IComponent;
 
 /**
  *
  * @author conno
  */
-public class Model implements ICommandHandler<ModelCommand> {
+public class Model implements ICommandHandler<ModelCommand>, IComponent {
+
+    public ICommandHandler<ViewCommand> ch;
 
     @Override
     public void Handle(ModelCommand command) {
         command.execute(this);
     }
+
+  
+
+    @Override
+    public void start() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ICommandHandler GetCommandHandler() {
+        return ch;
+    }
+
+    @Override
+    public void SetCommandHandler(ICommandHandler ch) {
+        this.ch = ch;
+    }
+
 }

@@ -10,12 +10,22 @@ import server.Model.Model;
 import server.View.View;
 
 public class Server {
-    private static View view; 
+
+    private static View view;
     private static Model model;
     private static Controller controller;
-        
+
     public static void main(String[] args) {
-        
-        
+
+        // create components
+        view = new View();
+        controller = new Controller();
+        model = new Model();
+        // link them
+        view.SetCommandHandler(controller);
+        controller.SetCommandHandler(model);
+        model.SetCommandHandler(view);
+        // start the view
+        view.start();
     }
 }

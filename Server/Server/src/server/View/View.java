@@ -5,18 +5,35 @@
  */
 package server.View;
 
-import server.Commands.ICommandHandler;
-import server.Commands.ViewCommand;
+import server.Commands.*;
+import server.IComponent;
 
 /**
  *
  * @author conno
  */
-public class View implements ICommandHandler<ViewCommand>{
+public class View implements ICommandHandler<ViewCommand>, IComponent {
+
+    private ICommandHandler<ControllerCommand> ch;
 
     @Override
     public void Handle(ViewCommand command) {
         command.execute(this);
+    }
+
+    @Override
+    public void SetCommandHandler(ICommandHandler ch) {
+        this.ch = ch;
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Welcome to your DiceLocked Server Console!");
+    }
+
+    @Override
+    public ICommandHandler GetCommandHandler() {
+        return ch;
     }
 
 }
