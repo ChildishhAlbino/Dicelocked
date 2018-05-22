@@ -6,6 +6,7 @@
 package server.Controller;
 
 import server.Commands.*;
+import server.Connectivity.Connectivity;
 import server.IComponent;
 
 /**
@@ -15,6 +16,7 @@ import server.IComponent;
 public class Controller implements ICommandHandler<ControllerCommand>, IComponent {
 
     private ICommandHandler<ModelCommand> ch;
+    private Connectivity connection;
 
     @Override
     public void Handle(ControllerCommand command) {
@@ -27,8 +29,9 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
     }
 
     @Override
-    public void start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void run() {
+        connection = new Connectivity();
+        connection.StartServer();
     }
 
     @Override

@@ -17,5 +17,5 @@ public interface IComponent {
     // needs fix
     ICommandHandler GetCommandHandler();
 
-    void start();
+    void run();
 }

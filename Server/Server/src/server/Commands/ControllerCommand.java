@@ -20,4 +20,13 @@ public abstract class ControllerCommand implements ICommand<Controller> {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
+
+    public static class StartServerCommand extends ControllerCommand {
+
+        @Override
+        public ResultCode execute(Controller commandHandler) {
+            commandHandler.run();
+            return ResultCode.Success;
+        }
+    }
 }

@@ -26,6 +26,6 @@ public class Server {
         controller.SetCommandHandler(model);
         model.SetCommandHandler(view);
         // start the view
-        view.start();
+        view.run();
     }
 }
