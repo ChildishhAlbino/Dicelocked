@@ -31,10 +31,23 @@ namespace Dicelocked.Commands
             if(button != null)
             {
                 count++;
+                if(count > 4)
+                {
+                    commandHandler.handle(new StartServerCommand());
+                }
                 commandHandler.CommandHandler.handle(new UpdateButtonText($"Button has been pressed {count} time(s)", button));
             }
             return Result.success;
         }  
+    }
+
+    public class StartServerCommand : ControlCommands
+    {
+        public override Result execution(Controller commandHandler)
+        {
+            commandHandler.StartServer(11000);
+            return Result.success;
+        }
     }
 
 

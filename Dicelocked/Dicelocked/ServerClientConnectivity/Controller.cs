@@ -37,6 +37,10 @@ namespace Dicelocked.ServerClientConncetivity
             }
         }
 
+        public void StartServer(int portNum)
+        {
+            connection = new ClientConnectivity();
+        }
 
     }
 }
