@@ -31,7 +31,7 @@ Warriors:
   
 Mages:
 
-  Sorcerors - typical mage class; can use spells to deal A.O.E damage but can only attack once per turn.
+  Sorcerers - typical mage class; can use spells to deal A.O.E damage but can only attack once per turn.
   
   Alchemists - can convert other units into different classes or buff them with bonuses, but cannot deal super effective damage 
   to other classes.
