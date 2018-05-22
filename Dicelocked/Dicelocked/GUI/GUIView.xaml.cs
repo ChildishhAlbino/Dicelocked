@@ -1,6 +1,6 @@
-﻿using Client.Commands;
-using Client.GUI;
-using Client.ServerClientConncetivity;
+﻿using Dicelocked.Commands;
+using Dicelocked.GUI;
+using Dicelocked.ServerClientConncetivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Client
+namespace Dicelocked
 {
     /// <summary>
     /// Interaction logic for GUIView.xaml

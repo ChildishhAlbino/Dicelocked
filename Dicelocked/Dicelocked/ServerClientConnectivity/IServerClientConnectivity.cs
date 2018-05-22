@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.ServerClientConncetivity
+namespace Dicelocked.ServerClientConncetivity
 {
     public interface IServerClientConnectivity 
     {
+        void Send(String data);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Client.ServerClientConncetivity;
+﻿using Dicelocked.ServerClientConncetivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Client.Commands
+namespace Dicelocked.Commands
 {
     public abstract class ControlCommands : ICommand<Controller>
     {

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Client.GUI;
-using Client.ServerClientConncetivity;
+using Dicelocked.GUI;
+using Dicelocked.ServerClientConncetivity;
 
-namespace Client.Commands
+namespace Dicelocked.Commands
 {
     public abstract class ViewCommand : ICommand<GUIView>
     {

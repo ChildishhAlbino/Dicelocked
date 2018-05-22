@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Client.Properties {
+namespace Dicelocked.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

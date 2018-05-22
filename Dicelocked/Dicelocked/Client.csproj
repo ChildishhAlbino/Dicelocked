@@ -80,6 +80,7 @@
     <Compile Include="GUI\GUIView.xaml.cs">
       <DependentUpon>GUIView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerClientConnectivity\ClientCode.cs" />
     <Compile Include="ServerClientConnectivity\Controller.cs" />
     <Compile Include="Commands\ControlCommands.cs" />
     <Compile Include="Commands\ICommand.cs" />

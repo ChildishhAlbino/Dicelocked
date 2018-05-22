@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Client.Commands;
-using Client.GUI;
+using Dicelocked.Commands;
+using Dicelocked.GUI;
 
-namespace Client.ServerClientConncetivity
+namespace Dicelocked.ServerClientConncetivity
 {
-    public class Controller : ICommandHandler<ControlCommands>, IServerClientConnectivity
+    public class Controller : ICommandHandler<ControlCommands>
     {
         private ICommandHandler<ViewCommand> commandHandler;
+        public ClientConnectivity connection;
+
         public ICommandHandler<ViewCommand> CommandHandler
         {
             get
@@ -34,5 +36,7 @@ namespace Client.ServerClientConncetivity
                 }
             }
         }
+
+
     }
 }
