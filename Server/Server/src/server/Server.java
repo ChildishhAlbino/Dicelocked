@@ -5,17 +5,17 @@
  */
 package server;
 
-/**
- *
- * @author conno
- */
-public class Server {
+import server.Controller.Controller;
+import server.Model.Model;
+import server.View.View;
 
-    /**
-     * @param args the command line arguments
-     */
+public class Server {
+    private static View view; 
+    private static Model model;
+    private static Controller controller;
+        
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        
     }
-    
 }
