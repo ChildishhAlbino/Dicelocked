@@ -35,7 +35,7 @@ namespace Dicelocked.Commands
                 {
                     commandHandler.handle(new StartServerCommand());
                 }
-                if (count > 5)
+                if (count >= 5)
                 {
                     commandHandler.Send(count.ToString());
                 }
