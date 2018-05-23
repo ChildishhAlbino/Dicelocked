@@ -32,8 +32,9 @@ public abstract class ControllerCommand implements ICommand<Controller> {
     }
 
     public static class ProcessIncommingCommand extends ControllerCommand {
-        
+
         private String incomming;
+
         public ProcessIncommingCommand(String incomming) {
             this.incomming = incomming;
         }
@@ -46,5 +47,4 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
     }
 
-  
 }

@@ -14,10 +14,6 @@ import server.Model.Model;
  */
 public abstract class ModelCommand implements ICommand<Model> {
 
-    public abstract class GameCommand extends ModelCommand {
-
-    }
-
     public static class TestModelCommand extends ModelCommand {
 
         @Override
@@ -27,10 +23,13 @@ public abstract class ModelCommand implements ICommand<Model> {
     }
 
     public static class ParseInputCommand extends ModelCommand {
+
         public String input;
-        public ParseInputCommand(String input){
+
+        public ParseInputCommand(String input) {
             this.input = input;
         }
+
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.GetCommandHandler().Handle(new PrintToViewCommand(input));

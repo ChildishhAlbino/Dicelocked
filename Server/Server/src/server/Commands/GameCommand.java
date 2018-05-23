@@ -5,12 +5,12 @@
  */
 package server.Commands;
 
+import server.Model.Game;
+
 /**
  *
  * @author conno
- * @param <T>
  */
-public interface ICommandHandler<T extends ICommand<?>> {
+public abstract class GameCommand implements ICommand<Game> {
 
-    void Handle(T command);
 }

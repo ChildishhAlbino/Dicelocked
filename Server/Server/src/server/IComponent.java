@@ -12,8 +12,10 @@ import server.Commands.ICommandHandler;
  * @author conno
  */
 public interface IComponent {
+
     // not perfect at all - can cause major problems later on
     void SetCommandHandler(ICommandHandler ch);
+
     // needs fix
     ICommandHandler GetCommandHandler();
 

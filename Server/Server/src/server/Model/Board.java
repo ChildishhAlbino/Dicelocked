@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Commands;
+package server.Model;
 
 /**
  *
  * @author conno
- * @param <T>
  */
-public interface ICommandHandler<T extends ICommand<?>> {
+public class Board {
 
-    void Handle(T command);
 }

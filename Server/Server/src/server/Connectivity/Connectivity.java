@@ -43,7 +43,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                     System.out.println("Found a connection");
                     sh = new SocketHandler(clientSocket, this);
                     sh.start();
-                    socketHandlers.add(sh);          
+                    socketHandlers.add(sh);
                 }
             }
         } catch (UnknownHostException ex) {

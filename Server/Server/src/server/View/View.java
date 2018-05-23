@@ -36,7 +36,7 @@ public class View implements ICommandHandler<ViewCommand>, IComponent {
         System.out.println("Welcome to your DiceLocked Server Console!");
         input = new Scanner(System.in);
         ch.Handle(new StartServerCommand());
-        while(true){
+        while (true) {
             System.out.println("listening");
             try {
                 Thread.sleep(1000);

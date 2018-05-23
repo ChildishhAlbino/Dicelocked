@@ -5,6 +5,8 @@
  */
 package server.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import server.Commands.*;
 import server.IComponent;
 
@@ -15,17 +17,18 @@ import server.IComponent;
 public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     public ICommandHandler<ViewCommand> ch;
+    private final int BOARD_SIZE = 3;
+
+    public List<Game> games;
 
     @Override
     public void Handle(ModelCommand command) {
         command.execute(this);
     }
 
-  
-
     @Override
     public void Start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
