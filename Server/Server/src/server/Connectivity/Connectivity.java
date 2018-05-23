@@ -38,9 +38,10 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         try (ServerSocket socket = new ServerSocket(PORT_NUMBER)) {
             while (listening) {
                 SocketHandler sh = null;
-                if (socket.accept() != null) {
+                Socket clientSocket = socket.accept();
+                if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(socket.accept(), this);
+                    sh = new SocketHandler(clientSocket, this);
                     sh.start();
                     socketHandlers.add(sh);          
                 }
