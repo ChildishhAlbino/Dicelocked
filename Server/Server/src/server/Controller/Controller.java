@@ -32,6 +32,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
     @Override
     public void Start() {
         connection = new Connectivity();
+        connection.SetCommandHandler(this);
         connection.start();
     }
 

@@ -42,5 +42,10 @@ namespace Dicelocked.ServerClientConncetivity
             connection = new ClientConnectivity();
         }
 
+        public void Send(string message)
+        {
+            connection.Send(message + "??");
+        }
+
     }
 }

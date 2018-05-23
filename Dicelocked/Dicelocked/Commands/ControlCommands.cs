@@ -31,9 +31,13 @@ namespace Dicelocked.Commands
             if(button != null)
             {
                 count++;
-                if(count > 4)
+                if(count == 4)
                 {
                     commandHandler.handle(new StartServerCommand());
+                }
+                if (count > 5)
+                {
+                    commandHandler.Send(count.ToString());
                 }
                 commandHandler.CommandHandler.handle(new UpdateButtonText($"Button has been pressed {count} time(s)", button));
             }

@@ -13,12 +13,18 @@ import server.View.View;
  */
 public abstract class ViewCommand implements ICommand<View> {
 
-    public static class TestViewCommand extends ViewCommand {
+    public static class PrintToViewCommand extends ViewCommand {
+
+        private String toBePrinted;
+
+        public PrintToViewCommand(String toBePrinted) {
+            this.toBePrinted = toBePrinted;
+        }
 
         @Override
         public ResultCode execute(View commandHandler) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            System.out.println(toBePrinted);
+            return ResultCode.Success;
         }
-
     }
 }

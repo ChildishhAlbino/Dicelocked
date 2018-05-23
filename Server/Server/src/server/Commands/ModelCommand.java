@@ -5,6 +5,7 @@
  */
 package server.Commands;
 
+import server.Commands.ViewCommand.*;
 import server.Model.Model;
 
 /**
@@ -23,6 +24,17 @@ public abstract class ModelCommand implements ICommand<Model> {
         public ResultCode execute(Model commandHandler) {
             return ResultCode.Failure;
         }
+    }
 
+    public static class ParseInputCommand extends ModelCommand {
+        public String input;
+        public ParseInputCommand(String input){
+            this.input = input;
+        }
+        @Override
+        public ResultCode execute(Model commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new PrintToViewCommand(input));
+            return ResultCode.Success;
+        }
     }
 }

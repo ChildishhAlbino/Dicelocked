@@ -5,6 +5,7 @@
  */
 package server.Commands;
 
+import server.Commands.ModelCommand.*;
 import server.Controller.Controller;
 
 /**
@@ -39,6 +40,7 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
         @Override
         public ResultCode execute(Controller commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new ParseInputCommand(incomming));
             return ResultCode.Success;
         }
 
