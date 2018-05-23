@@ -52,4 +52,9 @@ public class Game implements ICommandHandler<GameCommand> {
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
+    
+    public void PlayerJoin(Player player, SocketHandler sh){
+        
+    }
+    
 }

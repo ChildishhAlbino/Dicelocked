@@ -26,7 +26,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
     private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
     private final int PORT_NUMBER = 11000;
     private ICommandHandler<ControllerCommand> ch;
-
+    private static int ID = 0;
     public Connectivity() {
         super("ConnectivityManager");
         socketHandlers = new ArrayList<>();
@@ -41,7 +41,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                 Socket clientSocket = socket.accept();
                 if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(clientSocket, this);
+                    sh = new SocketHandler(clientSocket, this, GetID());
                     sh.start();
                     socketHandlers.add(sh);
                 }
@@ -80,4 +80,10 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
     public void Start() {
 
     }
+    
+    public static int GetID(){
+        ID++;
+        return ID;
+    }
+       
 }

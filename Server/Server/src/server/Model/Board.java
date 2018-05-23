@@ -25,7 +25,7 @@ public class Board {
         characters = new Character[size];
     }
     
-    public void SetPlayer(Player owner){
+    public void SetOwner(Player owner){
         if(this.owner != null){
             this.owner = owner;
         }
