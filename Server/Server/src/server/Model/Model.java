@@ -5,9 +5,9 @@
  */
 package server.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 import server.Commands.*;
+import server.Connectivity.SocketHandler;
 import server.IComponent;
 
 /**
@@ -40,5 +40,10 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     public void SetCommandHandler(ICommandHandler ch) {
         this.ch = ch;
     }
+    
+    public void NewGame(Player player, SocketHandler sh){
+        
+    }
+    
 
 }

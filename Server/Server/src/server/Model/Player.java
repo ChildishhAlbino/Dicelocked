@@ -11,4 +11,11 @@ package server.Model;
  */
 public class Player {
 
+    private final int ID;
+    private final String name;
+    
+    public Player(int ID, String name) {
+        this.ID = ID;
+        this.name = name;
+    }
 }

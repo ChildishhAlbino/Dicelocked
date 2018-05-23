@@ -5,7 +5,7 @@
  */
 package server.Commands;
 
-import server.Connectivity.Connectivity;
+import server.Connectivity.*;
 
 /**
  *
@@ -15,9 +15,18 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
     public static class SendMessageCommand extends ConnectivityCommand {
 
+        private SocketHandler sh;
+        private String message;
+
+        public SendMessageCommand(SocketHandler sh, String message) {
+            this.sh = sh;
+            this.message = message;
+        }
+
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            sh.Send(message);
+            return ResultCode.Success;
         }
 
     }
