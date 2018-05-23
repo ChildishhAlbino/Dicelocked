@@ -11,6 +11,7 @@ import java.rmi.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import server.Commands.*;
+import server.Commands.ControllerCommand.*;
 import server.Commands.ICommand;
 import server.Commands.ICommandHandler;
 import server.IComponent;
@@ -54,7 +55,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
     }
 
     public void Process(String incomming) {
-
+        ch.Handle(new ProcessIncommingCommand(incomming));
     }
 
     @Override
