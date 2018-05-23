@@ -10,18 +10,22 @@ import java.net.*;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import server.Commands.ConnectivityCommand;
+import server.Commands.*;
+import server.Commands.ICommand;
 import server.Commands.ICommandHandler;
+import server.IComponent;
 
 /**
  *
  * @author conno
  */
-public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>{
+public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>, IComponent {
 
     private boolean listening = true; // bool to control while loop
     private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
     private final int PORT_NUMBER = 11000;
+    private ICommandHandler<ControllerCommand> ch;
+
     public Connectivity() {
         super("ConnectivityManager");
         socketHandlers = new ArrayList<>();
@@ -48,13 +52,30 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
             System.out.println(ex.toString());
         }
     }
-    
-    public void Process(String incomming){
-        
+
+    public void Process(String incomming) {
+
     }
 
     @Override
     public void Handle(ConnectivityCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (command.execute(this) != ICommand.ResultCode.Failure) {
+            // record command in log
+        }
+    }
+
+    @Override
+    public void SetCommandHandler(ICommandHandler ch) {
+        this.ch = ch;
+    }
+
+    @Override
+    public ICommandHandler GetCommandHandler() {
+        return ch;
+    }
+
+    @Override
+    public void Start() {
+
     }
 }
