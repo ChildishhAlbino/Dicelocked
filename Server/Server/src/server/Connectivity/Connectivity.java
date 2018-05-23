@@ -10,12 +10,14 @@ import java.net.*;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import server.Commands.ConnectivityCommand;
+import server.Commands.ICommandHandler;
 
 /**
  *
  * @author conno
  */
-public class Connectivity extends Thread{
+public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>{
 
     private boolean listening = true; // bool to control while loop
     private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
@@ -25,7 +27,8 @@ public class Connectivity extends Thread{
         socketHandlers = new ArrayList<>();
     }
 
-    public void StartServer() {
+    @Override
+    public void run() {
         System.out.println("Starting Server!");
         try (ServerSocket socket = new ServerSocket(PORT_NUMBER)) {
             while (listening) {
@@ -34,7 +37,7 @@ public class Connectivity extends Thread{
                     System.out.println("Found a connection");
                     sh = new SocketHandler(socket.accept(), this);
                     socketHandlers.add(sh);
-                    sh.run();
+                    sh.start();
                 }
             }
         } catch (UnknownHostException ex) {
@@ -48,5 +51,10 @@ public class Connectivity extends Thread{
     
     public void Process(String incomming){
         
+    }
+
+    @Override
+    public void Handle(ConnectivityCommand command) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

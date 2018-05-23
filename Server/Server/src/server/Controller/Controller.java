@@ -17,6 +17,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     private ICommandHandler<ModelCommand> ch;
     private Connectivity connection;
+    private ICommandHandler<ConnectivityCommand> ch_connect;
 
     @Override
     public void Handle(ControllerCommand command) {
@@ -29,9 +30,9 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
     }
 
     @Override
-    public void run() {
+    public void Start() {
         connection = new Connectivity();
-        connection.StartServer();
+        connection.start();
     }
 
     @Override

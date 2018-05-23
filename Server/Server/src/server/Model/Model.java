@@ -24,7 +24,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
   
 
     @Override
-    public void run() {
+    public void Start() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

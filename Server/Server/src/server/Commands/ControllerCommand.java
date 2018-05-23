@@ -25,8 +25,24 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
         @Override
         public ResultCode execute(Controller commandHandler) {
-            commandHandler.run();
+            commandHandler.Start();
             return ResultCode.Success;
         }
     }
+
+    public static class ProcessIncommingCommand extends ControllerCommand {
+        
+        private String incomming;
+        public ProcessIncommingCommand(String incomming) {
+            this.incomming = incomming;
+        }
+
+        @Override
+        public ResultCode execute(Controller commandHandler) {
+            return ResultCode.Success;
+        }
+
+    }
+
+  
 }

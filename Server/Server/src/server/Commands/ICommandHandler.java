@@ -11,6 +11,6 @@ package server.Commands;
  * @param <T>
  */
 public interface ICommandHandler<T extends ICommand<?>> {
-
     void Handle(T command);
 }
+    
