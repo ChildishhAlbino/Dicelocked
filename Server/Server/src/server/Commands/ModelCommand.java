@@ -6,7 +6,9 @@
 package server.Commands;
 
 import server.Commands.ViewCommand.*;
+import server.Connectivity.SocketHandler;
 import server.Model.Model;
+import server.Model.Player;
 
 /**
  *
@@ -35,5 +37,32 @@ public abstract class ModelCommand implements ICommand<Model> {
             commandHandler.GetCommandHandler().Handle(new PrintToViewCommand(input));
             return ResultCode.Success;
         }
+    }
+
+    public static class FindGameCommand extends ModelCommand {
+
+        private final Player player;
+        private final SocketHandler sh;
+
+        public FindGameCommand(Player player, SocketHandler sh) {
+            this.player = player;
+            this.sh = sh;
+        }
+
+        @Override
+        public ResultCode execute(Model commandHandler) {
+            commandHandler.FindGame(player, sh);
+            return ResultCode.Success;
+        }
+    }
+    
+    public static class StartModelCommand extends ModelCommand {
+
+        @Override
+        public ResultCode execute(Model commandHandler) {
+            commandHandler.Start();
+            return ResultCode.Success;
+        }
+        
     }
 }

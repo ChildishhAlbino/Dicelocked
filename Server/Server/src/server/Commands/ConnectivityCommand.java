@@ -5,7 +5,10 @@
  */
 package server.Commands;
 
+import server.Commands.ControllerCommand.PassToModelCommand;
 import server.Connectivity.*;
+import server.Model.Player;
+
 
 /**
  *
@@ -33,13 +36,31 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
     public static class ProcessIncomingMessageCommand extends ConnectivityCommand {
 
         private final String incoming;
-        public ProcessIncomingMessageCommand(String incoming){
+
+        public ProcessIncomingMessageCommand(String incoming) {
             this.incoming = incoming;
         }
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
             commandHandler.Process(incoming);
+            return ResultCode.Success;
+        }
+    }
+
+    public static class PassToControllerCommand extends ConnectivityCommand {
+
+        private final Player player;
+        private final SocketHandler sh;
+
+        public PassToControllerCommand(Player player, SocketHandler sh) {
+            this.player = player;
+            this.sh = sh;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new PassToModelCommand(player, sh));
             return ResultCode.Success;
         }
     }

@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.*;
 import server.Commands.*;
 import server.Model.Player;
+import server.Commands.ConnectivityCommand.*;
 
 /**
  *
@@ -22,6 +23,7 @@ public class SocketHandler extends Thread {
     private ICommandHandler<ConnectivityCommand> ch;
     private final Connectivity connect;
     private final int ID;
+    private boolean listening = true;
 
     public SocketHandler(Socket socket, Connectivity connect, int ID) {
         super("SocketHandler");
@@ -31,28 +33,32 @@ public class SocketHandler extends Thread {
     }
 
     @Override
-    public void run() {    
+    public void run() {
         System.out.println("Socket handler no." + GetID() + " reporting for duty!");
-        Player player;
+        Player player = new Player(ID);
         try {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            while (socket.isConnected()) {
+            ch.Handle(new PassToControllerCommand(player, this));
+            while (socket.isConnected() && listening) {
                 incomming = in.readLine();
-                connect.Process(incomming);
+                ch.Handle(new ProcessIncomingMessageCommand(incomming));
                 incomming = null;
             }
         } catch (IOException ex) {
             if (socket.isClosed()) {
-                connect.Process("Error: client shut connection prematurely");
+                ch.Handle(new ProcessIncomingMessageCommand("Error: client shut connection prematurely"));
                 Shutdown();
             }
-        }
+        } 
     }
 
     public void Shutdown() {
         try {
+            // still needs to remove player from games
+            // also needs to delete games that didn't get filled.
+            listening = false;
             socket.close();
             in = null;
             out = null;
@@ -68,12 +74,12 @@ public class SocketHandler extends Thread {
     public int GetID() {
         return ID;
     }
-    
-    public void SetCommandHandler(ICommandHandler ch){
+
+    public void SetCommandHandler(ICommandHandler ch) {
         this.ch = ch;
     }
-    
-    public ICommandHandler GetCommandHandler(){
+
+    public ICommandHandler GetCommandHandler() {
         return ch;
     }
 }

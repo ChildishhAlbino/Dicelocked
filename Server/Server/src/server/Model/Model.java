@@ -5,6 +5,7 @@
  */
 package server.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import server.Commands.*;
 import server.Connectivity.SocketHandler;
@@ -28,7 +29,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     @Override
     public void Start() {
-
+        games = new ArrayList<>();
     }
 
     @Override
@@ -49,15 +50,23 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     }
 
     public void FindGame(Player player, SocketHandler sh) {
+        if(games == null){
+            Start();
+        }
         if (games.isEmpty()) {
+            System.out.println("No games found! Starting new one :D");
             NewGame(player, sh);
         } else {
-            for (int i = 0; i < games.size() + 1; i++) {
+            for (int i = 0; i < games.size(); i++) {
                 Game game = games.get(i);
+            
                 if (game.GotSpace()) {
+                    System.out.println("Found a game!! Joining now!");
                     game.PlayerJoin(player, sh);
-                } else if (i > games.size()) {
+                } else if (i >= games.size() - 1) {
+                    System.out.println("No games had space for you :( Creating a new one!");
                     NewGame(player, sh);
+                    break;
                 }
             }
         }

@@ -6,7 +6,9 @@
 package server.Commands;
 
 import server.Commands.ModelCommand.*;
+import server.Connectivity.SocketHandler;
 import server.Controller.Controller;
+import server.Model.Player;
 
 /**
  *
@@ -44,7 +46,23 @@ public abstract class ControllerCommand implements ICommand<Controller> {
             commandHandler.GetCommandHandler().Handle(new ParseInputCommand(incoming));
             return ResultCode.Success;
         }
+    }
 
+    public static class PassToModelCommand extends ControllerCommand {
+
+        private final Player player;
+        private final SocketHandler sh;
+
+        public PassToModelCommand(Player player, SocketHandler sh) {
+            this.player = player;
+            this.sh = sh;
+        }
+
+        @Override
+        public ResultCode execute(Controller commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new FindGameCommand(player, sh));
+            return ResultCode.Success;
+        }
     }
 
 }

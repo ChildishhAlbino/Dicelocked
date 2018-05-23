@@ -12,10 +12,15 @@ package server.Model;
 public class Player {
 
     private final int ID;
-    private final String name;
-    
-    public Player(int ID, String name) {
+    private String name;
+
+    public Player(int ID) {
         this.ID = ID;
-        this.name = name;
+    }
+
+    public void SetName(String name) {
+        if (this.name == null) {
+            this.name = name;
+        }
     }
 }
