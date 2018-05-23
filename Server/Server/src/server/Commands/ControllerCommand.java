@@ -31,17 +31,17 @@ public abstract class ControllerCommand implements ICommand<Controller> {
         }
     }
 
-    public static class ProcessIncommingCommand extends ControllerCommand {
+    public static class ProcessIncomingCommand extends ControllerCommand {
 
-        private String incomming;
+        private final String incoming;
 
-        public ProcessIncommingCommand(String incomming) {
-            this.incomming = incomming;
+        public ProcessIncomingCommand(String incoming) {
+            this.incoming = incoming;
         }
 
         @Override
         public ResultCode execute(Controller commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new ParseInputCommand(incomming));
+            commandHandler.GetCommandHandler().Handle(new ParseInputCommand(incoming));
             return ResultCode.Success;
         }
 

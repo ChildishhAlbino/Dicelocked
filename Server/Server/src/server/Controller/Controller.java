@@ -15,7 +15,7 @@ import server.IComponent;
  */
 public class Controller implements ICommandHandler<ControllerCommand>, IComponent {
 
-    private ICommandHandler<ModelCommand> ch;
+    private ICommandHandler<ModelCommand> ch_model;
     private Connectivity connection;
     private ICommandHandler<ConnectivityCommand> ch_connect;
 
@@ -26,7 +26,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     @Override
     public void SetCommandHandler(ICommandHandler ch) {
-        this.ch = ch;
+        this.ch_model = ch;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     @Override
     public ICommandHandler GetCommandHandler() {
-        return ch;
+        return ch_model;
     }
 }

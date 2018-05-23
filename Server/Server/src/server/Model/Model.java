@@ -40,10 +40,27 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     public void SetCommandHandler(ICommandHandler ch) {
         this.ch = ch;
     }
-    
-    public void NewGame(Player player, SocketHandler sh){
-        
+
+    public void NewGame(Player player, SocketHandler sh) {
+        Game game = new Game(BOARD_SIZE);
+        games.add(game);
+        game.Init();
+        game.PlayerJoin(player, sh);
     }
-    
+
+    public void FindGame(Player player, SocketHandler sh) {
+        if (games.isEmpty()) {
+            NewGame(player, sh);
+        } else {
+            for (int i = 0; i < games.size() + 1; i++) {
+                Game game = games.get(i);
+                if (game.GotSpace()) {
+                    game.PlayerJoin(player, sh);
+                } else if (i > games.size()) {
+                    NewGame(player, sh);
+                }
+            }
+        }
+    }
 
 }

@@ -15,8 +15,8 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
     public static class SendMessageCommand extends ConnectivityCommand {
 
-        private SocketHandler sh;
-        private String message;
+        private final SocketHandler sh;
+        private final String message;
 
         public SendMessageCommand(SocketHandler sh, String message) {
             this.sh = sh;
@@ -28,7 +28,19 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
             sh.Send(message);
             return ResultCode.Success;
         }
-
     }
 
+    public static class ProcessIncomingMessageCommand extends ConnectivityCommand {
+
+        private final String incoming;
+        public ProcessIncomingMessageCommand(String incoming){
+            this.incoming = incoming;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            commandHandler.Process(incoming);
+            return ResultCode.Success;
+        }
+    }
 }

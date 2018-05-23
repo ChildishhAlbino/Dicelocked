@@ -24,7 +24,9 @@ public class Game implements ICommandHandler<GameCommand> {
     private final int maxPlayers = 2;
     private final int BOARD_SIZE;
     private ICommandHandler<ModelCommand> ch;
-
+    private boolean full = false;
+    
+    
     public Game(int BOARD_SIZE) {
         this.BOARD_SIZE = BOARD_SIZE;
     }
@@ -54,7 +56,11 @@ public class Game implements ICommandHandler<GameCommand> {
     }
     
     public void PlayerJoin(Player player, SocketHandler sh){
-        
+        players.add(player);
+        PlayerToSocket.put(player, sh);
     }
     
+    public boolean GotSpace(){
+        return !full;
+    }
 }

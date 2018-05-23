@@ -7,6 +7,8 @@ package server.Connectivity;
 
 import java.io.*;
 import java.net.*;
+import server.Commands.*;
+import server.Model.Player;
 
 /**
  *
@@ -17,6 +19,7 @@ public class SocketHandler extends Thread {
     private Socket socket = null;
     private BufferedReader in;
     private PrintWriter out;
+    private ICommandHandler<ConnectivityCommand> ch;
     private final Connectivity connect;
     private final int ID;
 
@@ -30,6 +33,7 @@ public class SocketHandler extends Thread {
     @Override
     public void run() {    
         System.out.println("Socket handler no." + GetID() + " reporting for duty!");
+        Player player;
         try {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -63,5 +67,13 @@ public class SocketHandler extends Thread {
 
     public int GetID() {
         return ID;
+    }
+    
+    public void SetCommandHandler(ICommandHandler ch){
+        this.ch = ch;
+    }
+    
+    public ICommandHandler GetCommandHandler(){
+        return ch;
     }
 }
