@@ -31,8 +31,8 @@ public class SocketHandler extends Thread {
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            incomming = in.readLine();
-            while (incomming != null && incomming.contains("??")) {
+            while (socket.isConnected()) {
+                incomming = in.readLine();
                 connect.Process(incomming);
                 incomming = null;
             }
@@ -42,7 +42,7 @@ public class SocketHandler extends Thread {
                 incomming = null;
             }
         }
-        
+
     }
 
     public void Send(String message) {

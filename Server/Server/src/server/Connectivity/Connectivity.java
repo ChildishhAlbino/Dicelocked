@@ -37,12 +37,12 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         System.out.println("Starting Server!");
         try (ServerSocket socket = new ServerSocket(PORT_NUMBER)) {
             while (listening) {
-                SocketHandler sh;
+                SocketHandler sh = null;
                 if (socket.accept() != null) {
                     System.out.println("Found a connection");
                     sh = new SocketHandler(socket.accept(), this);
-                    socketHandlers.add(sh);
                     sh.start();
+                    socketHandlers.add(sh);          
                 }
             }
         } catch (UnknownHostException ex) {
