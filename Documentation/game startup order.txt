@@ -1,0 +1,10 @@
+Player connects
+Game is created
+Game sets up board and backend code. Init()
+Player is added to a board and waits for another player to join.
+Another player joins!
+Program searches for a game with space left
+Adds player to game
+assigns each player a board.
+Both players ready up!
+Game starts!

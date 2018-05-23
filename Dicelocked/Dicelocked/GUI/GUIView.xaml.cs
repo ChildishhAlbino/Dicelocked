@@ -62,11 +62,6 @@ namespace Dicelocked
            
         }
 
-        public void UpdateElementContent(ContentControl element, string content)
-        {
-            throw new NotImplementedException();
-        }
-
         public void handle(ViewCommand command)
         {
             if (!(command is null))

@@ -39,7 +39,7 @@ namespace Dicelocked.Commands
                 {
                     commandHandler.Send(count.ToString());
                 }
-                commandHandler.CommandHandler.handle(new UpdateButtonText($"Button has been pressed {count} time(s)", button));
+                commandHandler.CommandHandler.handle(new UpdateButtonTextCommand($"Button has been pressed {count} time(s)", button));
             }
             return Result.success;
         }  

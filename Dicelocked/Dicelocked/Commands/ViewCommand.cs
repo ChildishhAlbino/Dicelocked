@@ -27,11 +27,11 @@ namespace Dicelocked.Commands
         }
     }
 
-    public class UpdateButtonText : ViewCommand
+    public class UpdateButtonTextCommand : ViewCommand
     {
         string buttonText;
         Button button;
-        public UpdateButtonText(string buttonText, Button button)
+        public UpdateButtonTextCommand(string buttonText, Button button)
         {
             this.buttonText = buttonText;
             this.button = button;
