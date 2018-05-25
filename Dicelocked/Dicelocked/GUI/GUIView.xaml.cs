@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Timers;
 
 namespace Dicelocked
 {
@@ -22,16 +23,20 @@ namespace Dicelocked
     /// </summary>
     public partial class GUIView : Window, IView, ICommandHandler<ViewCommand>
     {
-        private ICommandHandler<ControlCommands> commandHandler;
+        private ICommandHandler<ControllerCommand> commandHandler;
+        private List<ViewCommand> commandBacklog;
+        private Timer timer;
         public GUIView()
         {
             Controller controller = new Controller();
             controller.CommandHandler = this;
             this.CommandHandler = controller;
+            commandBacklog = new List<ViewCommand>();
+            //RefreshLoop();
             InitializeComponent();
         }
 
-        public ICommandHandler<ControlCommands> CommandHandler
+        public ICommandHandler<ControllerCommand> CommandHandler
         {
             get
             {
@@ -43,10 +48,10 @@ namespace Dicelocked
                 commandHandler = value;
             }
         }
- 
+
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            if(sender is Button)
+            if (sender is Button)
             {
                 Button button = (Button)sender;
                 CommandHandler.handle(new AddIntCommand(button));
@@ -59,7 +64,7 @@ namespace Dicelocked
 
         public void UpdateGUI()
         {
-           
+
         }
 
         public void handle(ViewCommand command)
@@ -77,6 +82,89 @@ namespace Dicelocked
         public void UpdateButtonContent(Button button, string content)
         {
             button.Content = content;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            // do something 
+            base.OnClosing(e);
+        }
+
+        private void RefreshLoop()
+        {
+            timer = new Timer(1000);
+            timer.AutoReset = true;
+            timer.Enabled = true;
+            timer.Elapsed += new ElapsedEventHandler(RefreshWindow);
+            timer.Start();
+        }
+
+        private void RefreshWindow(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Timer elapsed!");
+            if (commandBacklog.Count > 0)
+            {
+                ClearBacklog();
+            }
+        }
+
+        private void ClearBacklog()
+        {
+            lock (commandBacklog)
+            {
+                // do something
+                foreach (ViewCommand vc in commandBacklog.ToList())
+                {
+                    if (vc.execution(this) != Result.failure)
+                    {
+                        // log
+                    }
+                    commandBacklog.Remove(vc);
+                }
+            }
+        }
+
+        protected override void OnMouseEnter(MouseEventArgs e)
+        {
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            Console.WriteLine(e.GetPosition(this).X.ToString());
+            ClearBacklog();
+            InvalidateVisual();
+            base.OnMouseMove(e);
+        }
+
+        public void AskForName()
+        {
+            Console.WriteLine("Asking");
+            enterName_texty.Visibility = Visibility.Visible;
+            enterName_Button.Visibility = Visibility.Visible;
+        }
+
+        private void enterName_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (enterName_texty.Text != null || enterName_texty.Text != "Please enter a name" || enterName_texty.Text != "Please enter a propper name!")
+            {
+                commandHandler.handle(new SendMessageCommand(enterName_texty.Text));
+                enterName_texty.Visibility = Visibility.Hidden;
+                enterName_Button.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                enterName_texty.Text = "Please enter a proper name!";
+            }
+        }
+
+        public void AddToBacklog(ViewCommand vc)
+        {
+            lock (commandBacklog)
+            {
+                commandBacklog.Add(vc);
+                //InvalidateVisual();
+            }
         }
     }
 }

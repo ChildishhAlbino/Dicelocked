@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:Dicelocked"
         mc:Ignorable="d"
         Title="GUIView" Height="500" Width="500">
-    <Grid>
+    <Grid Height="469" VerticalAlignment="Bottom">
         <Button x:Name="Button" Width="200" Height="50" Content="Press Me" Click="OnButtonClick"></Button>
+        <TextBox x:Name="enterName_texty" HorizontalAlignment="Left" Height="50" TextWrapping="Wrap" 
+                 Text="Please enter a name!" VerticalAlignment="Top" Width="200" Margin="146,210,0,0" Visibility="Hidden"/>
+        <Button x:Name="enterName_Button" Content="Press to enter name!" Margin="188,265,188,175" Click="enterName_Button_Click" Visibility="Hidden"/>
+
     </Grid>
 </Window>

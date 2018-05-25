@@ -11,6 +11,7 @@ namespace Dicelocked.ServerClientConncetivity
     using System.Net.Sockets;
     using System.Threading;
     using System.Text;
+    using Dicelocked.Commands;
 
     // State object for receiving data from remote device.  
     public class StateObject
@@ -30,7 +31,18 @@ namespace Dicelocked.ServerClientConncetivity
         // The port number for the remote device.  
         private const int port = 11000;
         private String response = String.Empty;
-
+        private ICommandHandler<ControllerCommand> ch;
+        public ICommandHandler<ControllerCommand> CommandHandler
+        {
+            get
+            {
+                return ch;
+            }
+            set
+            {
+                this.ch = value;
+            }
+        }
         private Socket connection;
         public ClientConnectivity()
         {
@@ -64,6 +76,8 @@ namespace Dicelocked.ServerClientConncetivity
 
                 Console.WriteLine("Socket connected to {0}",
                     client.RemoteEndPoint.ToString());
+
+                Receive(client);
             }
             catch (Exception e)
             {
@@ -101,19 +115,20 @@ namespace Dicelocked.ServerClientConncetivity
 
                 if (bytesRead > 0)
                 {
+                    Console.WriteLine("Got bytes!");
                     // There might be more data, so store the data received so far.  
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
-                    if (state.sb.ToString().IndexOf("??") > -1)
+                    if (state.sb.ToString().Contains("?"))
                     {
                         // ? = end of file
                         String str = state.sb.ToString();
                         Console.WriteLine(str);
+                        ch.handle(new ParseRecievedCommand(str));
                     }
                     // look for more data    
                 }
                 client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                         new AsyncCallback(ReceiveCallback), state);
-
             }
             catch (Exception e)
             {

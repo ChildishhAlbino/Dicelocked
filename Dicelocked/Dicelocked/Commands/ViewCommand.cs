@@ -18,11 +18,16 @@ namespace Dicelocked.Commands
         }
     }
 
-    public class UpdateViewCommand : ViewCommand        
+    public class UpdateViewCommand : ViewCommand
     {
+        private ViewCommand vc;
+        public UpdateViewCommand(ViewCommand vc)
+        {
+            this.vc = vc;
+        }
         public override Result execution(GUIView commandHandler)
         {
-            commandHandler.UpdateGUI();
+            commandHandler.AddToBacklog(vc);
             return Result.success;
         }
     }
@@ -40,6 +45,15 @@ namespace Dicelocked.Commands
         public override Result execution(GUIView commandHandler)
         {
             commandHandler.UpdateButtonContent(button, buttonText);
+            return Result.success;
+        }
+    }
+
+    public class AskForNameCommand : ViewCommand
+    {
+        public override Result execution(GUIView commandHandler)
+        {
+            commandHandler.AskForName();
             return Result.success;
         }
     }

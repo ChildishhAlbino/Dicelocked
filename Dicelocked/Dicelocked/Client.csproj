@@ -82,7 +82,7 @@
     </Compile>
     <Compile Include="ServerClientConnectivity\ClientCode.cs" />
     <Compile Include="ServerClientConnectivity\Controller.cs" />
-    <Compile Include="Commands\ControlCommands.cs" />
+    <Compile Include="Commands\ControllerCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="GUI\IView.cs" />

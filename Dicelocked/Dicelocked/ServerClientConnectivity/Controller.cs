@@ -8,7 +8,7 @@ using Dicelocked.GUI;
 
 namespace Dicelocked.ServerClientConncetivity
 {
-    public class Controller : ICommandHandler<ControlCommands>
+    public class Controller : ICommandHandler<ControllerCommand>
     {
         private ICommandHandler<ViewCommand> commandHandler;
         public ClientConnectivity connection;
@@ -26,26 +26,26 @@ namespace Dicelocked.ServerClientConncetivity
             }
         }
 
-        public void handle(ControlCommands command)
+        public void handle(ControllerCommand command)
         {
             if (!(command is null))
             {
                 if (command.execution(this) == Result.success)
                 {
-                    CommandHandler.handle(new UpdateViewCommand());
+                    // log command
                 }
             }
         }
 
-        public void StartServer(int portNum)
+        public void StartConnecting(int portNum)
         {
             connection = new ClientConnectivity();
+            connection.CommandHandler = this;
         }
 
         public void Send(string message)
         {
             connection.Send(message + "\n");
         }
-
     }
 }

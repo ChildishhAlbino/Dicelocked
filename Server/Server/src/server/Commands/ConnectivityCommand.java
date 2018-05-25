@@ -82,13 +82,13 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
         public ResultCode execute(Connectivity commandHandler) {
             switch(it){
                 case name:
-                    sh.Send("afi-n/n");
+                    sh.Send("afi-n");
                     break;
                 case move:
-                    sh.Send("afi-m/n");
+                    sh.Send("afi-m");
                     break;
                 case selection:
-                    sh.Send("afi-sel/n");
+                    sh.Send("afi-sel");
             }
             return ResultCode.Success;
         }

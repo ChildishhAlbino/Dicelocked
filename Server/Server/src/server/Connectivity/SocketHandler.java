@@ -66,6 +66,7 @@ public class SocketHandler extends Thread {
     }
 
     public void Send(String message) {
+        message += "?";
         System.out.println(message);
         out.println(message);
     }

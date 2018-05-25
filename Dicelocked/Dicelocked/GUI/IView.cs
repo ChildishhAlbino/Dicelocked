@@ -12,5 +12,7 @@ namespace Dicelocked.GUI
         void UpdateGUI();
 
         void UpdateButtonContent(Button button, string content);
+
+
     }
 }
