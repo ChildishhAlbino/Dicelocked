@@ -25,14 +25,12 @@ namespace Dicelocked
     {
         private ICommandHandler<ControllerCommand> commandHandler;
         private List<ViewCommand> commandBacklog;
-        private Timer timer;
         public GUIView()
         {
             Controller controller = new Controller();
             controller.CommandHandler = this;
             this.CommandHandler = controller;
             commandBacklog = new List<ViewCommand>();
-            //RefreshLoop();
             InitializeComponent();
         }
 
@@ -90,23 +88,6 @@ namespace Dicelocked
             base.OnClosing(e);
         }
 
-        private void RefreshLoop()
-        {
-            timer = new Timer(1000);
-            timer.AutoReset = true;
-            timer.Enabled = true;
-            timer.Elapsed += new ElapsedEventHandler(RefreshWindow);
-            timer.Start();
-        }
-
-        private void RefreshWindow(object sender, ElapsedEventArgs e)
-        {
-            Console.WriteLine("Timer elapsed!");
-            if (commandBacklog.Count > 0)
-            {
-                ClearBacklog();
-            }
-        }
 
         private void ClearBacklog()
         {
@@ -131,7 +112,7 @@ namespace Dicelocked
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            Console.WriteLine(e.GetPosition(this).X.ToString());
+            //Console.WriteLine(e.GetPosition(this).X.ToString());
             ClearBacklog();
             InvalidateVisual();
             base.OnMouseMove(e);
@@ -139,7 +120,7 @@ namespace Dicelocked
 
         public void AskForName()
         {
-            Console.WriteLine("Asking");
+            //Console.WriteLine("Asking");
             enterName_texty.Visibility = Visibility.Visible;
             enterName_Button.Visibility = Visibility.Visible;
         }

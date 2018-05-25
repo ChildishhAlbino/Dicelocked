@@ -45,7 +45,8 @@ namespace Dicelocked.ServerClientConncetivity
 
         public void Send(string message)
         {
-            connection.Send(message + "\n");
+            message += "\n";
+            connection.Send((message));
         }
     }
 }
