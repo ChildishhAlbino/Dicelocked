@@ -42,7 +42,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                 Socket clientSocket = socket.accept();
                 if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(clientSocket, this, GetID());
+                    sh = new SocketHandler(clientSocket, GetID());
                     sh.SetCommandHandler(this);
                     sh.start();
                     socketHandlers.add(sh);

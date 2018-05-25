@@ -21,26 +21,24 @@ public class SocketHandler extends Thread {
     private BufferedReader in;
     private PrintWriter out;
     private ICommandHandler<ConnectivityCommand> ch;
-    private final Connectivity connect;
     private final int ID;
     private boolean listening = true;
 
-    public SocketHandler(Socket socket, Connectivity connect, int ID) {
+    public SocketHandler(Socket socket, int ID) {
         super("SocketHandler");
         this.socket = socket;
-        this.connect = connect;
         this.ID = ID;
     }
 
     @Override
     public void run() {
         System.out.println("Socket handler no." + GetID() + " reporting for duty!");
-        Player player = new Player(ID);
+        
         try {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            ch.Handle(new PassToControllerCommand(player, this));
+            ch.Handle(new PassToControllerCommand(ListenForPlayerName(), this));
             while (socket.isConnected() && listening) {
                 incomming = in.readLine();
                 ch.Handle(new ProcessIncomingMessageCommand(incomming));
@@ -68,6 +66,7 @@ public class SocketHandler extends Thread {
     }
 
     public void Send(String message) {
+        System.out.println(message);
         out.println(message);
     }
 
@@ -81,5 +80,15 @@ public class SocketHandler extends Thread {
 
     public ICommandHandler GetCommandHandler() {
         return ch;
+    }
+    
+    private String ListenForPlayerName() throws IOException{
+        String name = null;
+        ch.Handle(new AskForInputCommand(this, AskForInputCommand.InputType.name));
+        System.out.println("Sent command!");
+        while(name == null){
+            name = in.readLine();       
+        }
+        return name;
     }
 }

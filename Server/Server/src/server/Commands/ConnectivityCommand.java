@@ -9,7 +9,6 @@ import server.Commands.ControllerCommand.PassToModelCommand;
 import server.Connectivity.*;
 import server.Model.Player;
 
-
 /**
  *
  * @author conno
@@ -50,17 +49,47 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
     public static class PassToControllerCommand extends ConnectivityCommand {
 
-        private final Player player;
+        private final String ID;
         private final SocketHandler sh;
 
-        public PassToControllerCommand(Player player, SocketHandler sh) {
-            this.player = player;
+        public PassToControllerCommand(String ID, SocketHandler sh) {
+            this.ID = ID;
             this.sh = sh;
         }
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new PassToModelCommand(player, sh));
+            commandHandler.GetCommandHandler().Handle(new PassToModelCommand(ID, sh));
+            return ResultCode.Success;
+        }
+    }
+
+    public static class AskForInputCommand extends ConnectivityCommand {
+        public enum InputType{
+            name,
+            selection,
+            move,
+        }
+        private final SocketHandler sh;
+        private final InputType it;
+
+        public AskForInputCommand(SocketHandler sh, InputType it) {
+            this.sh = sh;
+            this.it = it;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            switch(it){
+                case name:
+                    sh.Send("afi-n/n");
+                    break;
+                case move:
+                    sh.Send("afi-m/n");
+                    break;
+                case selection:
+                    sh.Send("afi-sel/n");
+            }
             return ResultCode.Success;
         }
     }

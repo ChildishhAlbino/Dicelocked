@@ -19,7 +19,8 @@ import server.Connectivity.SocketHandler;
 public class Game implements ICommandHandler<GameCommand> {
 
     private List<Board> boards;
-    private List<Player> players;
+    private HashMap<String, Player> players;
+    //private List<Player> players;
     private HashMap<Player, SocketHandler> PlayerToSocket;
     private final int maxPlayers = 2;
     private final int BOARD_SIZE;
@@ -33,7 +34,8 @@ public class Game implements ICommandHandler<GameCommand> {
     public void Init() {
         boards = new ArrayList<>(); // initializes list of board
         PlayerToSocket = new HashMap<>();
-        players = new ArrayList<>();
+        //players = new ArrayList<>();
+        players = new HashMap<>();
         for (int i = 0; i < maxPlayers; i++) {
             boards.add(new Board(BOARD_SIZE, i + 1)); // creates a board for each of the players at a given size
         }
@@ -53,14 +55,14 @@ public class Game implements ICommandHandler<GameCommand> {
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
-
-    public void PlayerJoin(Player player, SocketHandler sh) {
-        players.add(player);
+    
+    public void PlayerJoin(String ID, SocketHandler sh){
+        Player player = new Player(ID);
         PlayerToSocket.put(player, sh);
-        boards.get(players.indexOf(player)).SetOwner(player);
-        if (players.size() == maxPlayers) {
+        players.put(ID, player);
+        if(players.size() == maxPlayers){
             full = true;
-        }
+        } 
     }
 
     public boolean GotSpace() {

@@ -50,17 +50,17 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
     public static class PassToModelCommand extends ControllerCommand {
 
-        private final Player player;
+        private final String ID;
         private final SocketHandler sh;
 
-        public PassToModelCommand(Player player, SocketHandler sh) {
-            this.player = player;
+        public PassToModelCommand(String ID, SocketHandler sh) {
+            this.ID = ID;
             this.sh = sh;
         }
 
         @Override
         public ResultCode execute(Controller commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new FindGameCommand(player, sh));
+            commandHandler.GetCommandHandler().Handle(new FindGameCommand(ID, sh));
             return ResultCode.Success;
         }
     }

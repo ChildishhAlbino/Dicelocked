@@ -20,8 +20,12 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     public ICommandHandler<ViewCommand> ch;
     private final int BOARD_SIZE = 3;
 
-    public List<Game> games;
-
+    public List<Game> waiting_games;
+    public List<Game> full_games;
+    
+    public Model(){
+        Start();
+    }
     @Override
     public void Handle(ModelCommand command) {
         command.execute(this);
@@ -29,7 +33,8 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     @Override
     public void Start() {
-        games = new ArrayList<>();
+        waiting_games = new ArrayList<>();
+        full_games = new ArrayList<>();
     }
 
     @Override
@@ -42,30 +47,33 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
         this.ch = ch;
     }
 
-    public void NewGame(Player player, SocketHandler sh) {
+    public void NewGame(String ID, SocketHandler sh) {
         Game game = new Game(BOARD_SIZE);
-        games.add(game);
+        waiting_games.add(game);
         game.Init();
-        game.PlayerJoin(player, sh);
+        game.PlayerJoin(ID, sh);
     }
 
-    public void FindGame(Player player, SocketHandler sh) {
-        if(games == null){
+    public void FindGame(String ID, SocketHandler sh) {
+        if(waiting_games == null || full_games == null){
             Start();
         }
-        if (games.isEmpty()) {
+        if (waiting_games.isEmpty()) {
             System.out.println("No games found! Starting new one :D");
-            NewGame(player, sh);
+            NewGame(ID, sh);
         } else {
-            for (int i = 0; i < games.size(); i++) {
-                Game game = games.get(i);
-            
+            for (int i = 0; i < waiting_games.size(); i++) {
+                Game game = waiting_games.get(i);
                 if (game.GotSpace()) {
                     System.out.println("Found a game!! Joining now!");
-                    game.PlayerJoin(player, sh);
-                } else if (i >= games.size() - 1) {
+                    game.PlayerJoin(ID, sh);
+                    if(!(game.GotSpace())){
+                        full_games.add(game);
+                        waiting_games.remove(game);
+                    }
+                } else if (i >= waiting_games.size() - 1) {
                     System.out.println("No games had space for you :( Creating a new one!");
-                    NewGame(player, sh);
+                    NewGame(ID, sh);
                     break;
                 }
             }

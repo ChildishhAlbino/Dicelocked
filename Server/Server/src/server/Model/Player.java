@@ -11,10 +11,10 @@ package server.Model;
  */
 public class Player {
 
-    private final int ID;
+    private final String ID;
     private String name;
 
-    public Player(int ID) {
+    public Player(String ID) {
         this.ID = ID;
     }
 

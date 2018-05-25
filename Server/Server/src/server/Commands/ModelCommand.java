@@ -41,17 +41,17 @@ public abstract class ModelCommand implements ICommand<Model> {
 
     public static class FindGameCommand extends ModelCommand {
 
-        private final Player player;
+        private final String ID;
         private final SocketHandler sh;
 
-        public FindGameCommand(Player player, SocketHandler sh) {
-            this.player = player;
+        public FindGameCommand(String ID, SocketHandler sh) {
+            this.ID = ID;
             this.sh = sh;
         }
 
         @Override
         public ResultCode execute(Model commandHandler) {
-            commandHandler.FindGame(player, sh);
+            commandHandler.FindGame(ID, sh);
             return ResultCode.Success;
         }
     }
