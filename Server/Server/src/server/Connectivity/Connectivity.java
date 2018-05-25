@@ -21,7 +21,7 @@ import server.IComponent;
  * @author conno
  */
 public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>, IComponent {
-    
+
     private boolean listening = true; // bool to control while loop
     private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
     private final int PORT_NUMBER = 11000;
@@ -32,7 +32,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         super("ConnectivityManager");
         socketHandlers = new ArrayList<>();
     }
-    
+
     @Override
     public void run() {
         System.out.println("Starting Server!");
@@ -56,36 +56,36 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
             System.out.println(ex.toString());
         }
     }
-    
+
     public void Process(String incomming) {
         ch.Handle(new ProcessIncomingCommand(incomming));
     }
-    
+
     @Override
     public void Handle(ConnectivityCommand command) {
         if (command.execute(this) != ICommand.ResultCode.Failure) {
             // record command in log
         }
     }
-    
+
     @Override
     public void SetCommandHandler(ICommandHandler ch) {
         this.ch = ch;
     }
-    
+
     @Override
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
-    
+
     @Override
     public void Start() {
-        
+
     }
-    
+
     public static int GetID() {
         ID++;
         return ID;
     }
-    
+
 }

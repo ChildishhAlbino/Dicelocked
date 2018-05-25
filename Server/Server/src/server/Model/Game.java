@@ -18,7 +18,9 @@ import server.Connectivity.SocketHandler;
  */
 public class Game implements ICommandHandler<GameCommand> {
 
+    
     private List<Board> boards;
+    private List<String> ids;
     private HashMap<String, Player> players;
     //private List<Player> players;
     private HashMap<Player, SocketHandler> PlayerToSocket;
@@ -34,6 +36,7 @@ public class Game implements ICommandHandler<GameCommand> {
     public void Init() {
         boards = new ArrayList<>(); // initializes list of board
         PlayerToSocket = new HashMap<>();
+        ids = new ArrayList<>();
         //players = new ArrayList<>();
         players = new HashMap<>();
         for (int i = 0; i < maxPlayers; i++) {
@@ -55,14 +58,31 @@ public class Game implements ICommandHandler<GameCommand> {
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
-    
-    public void PlayerJoin(String ID, SocketHandler sh){
-        Player player = new Player(ID);
-        PlayerToSocket.put(player, sh);
-        players.put(ID, player);
-        if(players.size() == maxPlayers){
-            full = true;
-        } 
+
+    public void PlayerJoin(String ID, SocketHandler sh) {
+        if (players.containsKey(ID) == false) {
+            Player player = new Player(ID);
+            PlayerToSocket.put(player, sh);
+            ids.add(ID);
+            players.put(ID, player);
+            if (players.size() == maxPlayers) {
+                full = true;
+            }
+        } else {
+            PlayerJoin(ID.substring(0, ID.indexOf("_") - 1), sh);
+        }
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        str += "Game: \n";
+        str += ("Players: " + players.size() + "\n");
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(ids.get(i));
+            str += player.toString();
+        }
+        return str;
     }
 
     public boolean GotSpace() {

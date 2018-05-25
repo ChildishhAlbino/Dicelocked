@@ -51,7 +51,7 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
         private final String ID;
         private final SocketHandler sh;
-
+        
         public PassToControllerCommand(String ID, SocketHandler sh) {
             this.ID = ID;
             this.sh = sh;
@@ -65,7 +65,8 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
     }
 
     public static class AskForInputCommand extends ConnectivityCommand {
-        public enum InputType{
+
+        public enum InputType {
             name,
             selection,
             move,
@@ -80,7 +81,7 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            switch(it){
+            switch (it) {
                 case name:
                     sh.Send("afi-n");
                     break;

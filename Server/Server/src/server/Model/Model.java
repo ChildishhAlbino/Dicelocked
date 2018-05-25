@@ -17,15 +17,19 @@ import server.IComponent;
  */
 public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
+    public enum game_type {
+        waiting, full
+    }
     public ICommandHandler<ViewCommand> ch;
     private final int BOARD_SIZE = 3;
 
     public List<Game> waiting_games;
     public List<Game> full_games;
-    
-    public Model(){
+
+    public Model() {
         Start();
     }
+
     @Override
     public void Handle(ModelCommand command) {
         command.execute(this);
@@ -55,7 +59,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     }
 
     public void FindGame(String ID, SocketHandler sh) {
-        if(waiting_games == null || full_games == null){
+        if (waiting_games == null || full_games == null) {
             Start();
         }
         if (waiting_games.isEmpty()) {
@@ -67,7 +71,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
                 if (game.GotSpace()) {
                     System.out.println("Found a game!! Joining now!");
                     game.PlayerJoin(ID, sh);
-                    if(!(game.GotSpace())){
+                    if (!(game.GotSpace())) {
                         full_games.add(game);
                         waiting_games.remove(game);
                     }

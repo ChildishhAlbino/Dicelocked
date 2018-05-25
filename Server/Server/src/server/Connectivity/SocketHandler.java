@@ -7,8 +7,8 @@ package server.Connectivity;
 
 import java.io.*;
 import java.net.*;
+import java.util.Random;
 import server.Commands.*;
-import server.Model.Player;
 import server.Commands.ConnectivityCommand.*;
 
 /**
@@ -33,7 +33,7 @@ public class SocketHandler extends Thread {
     @Override
     public void run() {
         System.out.println("Socket handler no." + GetID() + " reporting for duty!");
-        
+
         try {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -49,7 +49,7 @@ public class SocketHandler extends Thread {
                 ch.Handle(new ProcessIncomingMessageCommand("Error: client shut connection prematurely"));
                 Shutdown();
             }
-        } 
+        }
     }
 
     public void Shutdown() {
@@ -82,14 +82,27 @@ public class SocketHandler extends Thread {
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
-    
-    private String ListenForPlayerName() throws IOException{
+
+    private String ListenForPlayerName() throws IOException {
         String name = null;
         ch.Handle(new AskForInputCommand(this, AskForInputCommand.InputType.name));
         System.out.println("Sent command!");
-        while(name == null){
-            name = in.readLine();       
+        while (name == null) {
+            name = in.readLine();
         }
+        
+        name += GenerateID(3);
         return name;
+    }
+    
+    private String GenerateID(int length){
+        Random rand = new Random();
+        int i = rand.nextInt(10);
+        String rStr = "_";
+        for (int j = 0; j < length; j++) {
+            rStr += i;
+            i = rand.nextInt(10);
+        }      
+        return rStr;
     }
 }

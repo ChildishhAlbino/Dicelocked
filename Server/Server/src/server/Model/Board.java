@@ -22,7 +22,7 @@ public class Board {
     }
 
     public void Init() {
-        System.out.println("Init. Board no."+ id);
+        System.out.println("Init. Board no." + id);
         characters = new Character[size];
     }
 

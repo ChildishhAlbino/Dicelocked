@@ -5,6 +5,9 @@
  */
 package server.Commands;
 
+import java.util.List;
+import server.Model.Game;
+import server.Model.Model.*;
 import server.View.View;
 
 /**
@@ -26,5 +29,23 @@ public abstract class ViewCommand implements ICommand<View> {
             System.out.println(toBePrinted);
             return ResultCode.Success;
         }
+    }
+
+    public static class PrintGamesListCommand extends ViewCommand {
+
+        private final List<Game> games;
+        private final game_type gt;
+
+        public PrintGamesListCommand(List<Game> games, game_type gt) {
+            this.games = games;
+            this.gt = gt;
+        }
+
+        @Override
+        public ResultCode execute(View commandHandler) {
+            commandHandler.PrintGamesList(games, gt);
+            return ResultCode.Success;
+        }
+
     }
 }

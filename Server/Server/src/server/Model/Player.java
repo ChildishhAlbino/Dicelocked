@@ -16,11 +16,20 @@ public class Player {
 
     public Player(String ID) {
         this.ID = ID;
+        name = ID.substring(0, ID.indexOf("_"));
     }
 
     public void SetName(String name) {
         if (this.name == null) {
             this.name = name;
         }
+    }
+    
+    @Override
+    public String toString(){
+        String str = "";
+        str += "Player ID: " + ID + "\n";
+        str += "Name: " + name + "\n";
+        return str;
     }
 }

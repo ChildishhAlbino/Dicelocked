@@ -5,24 +5,18 @@
  */
 package server.Commands;
 
+import java.util.List;
 import server.Commands.ModelCommand.*;
 import server.Connectivity.SocketHandler;
 import server.Controller.Controller;
-import server.Model.Player;
+import server.Model.Game;
+import server.Model.Model;
 
 /**
  *
  * @author conno
  */
 public abstract class ControllerCommand implements ICommand<Controller> {
-
-    public static class AddOneCommand extends ControllerCommand {
-
-        @Override
-        public ResultCode execute(Controller commandHandler) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
 
     public static class StartServerCommand extends ControllerCommand {
 
@@ -65,4 +59,12 @@ public abstract class ControllerCommand implements ICommand<Controller> {
         }
     }
 
+    public static class AskModeForGamesListCommand extends ControllerCommand {
+
+        @Override
+        public ResultCode execute(Controller commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new PassGamesListToViewCommand());
+            return ResultCode.Success;
+        }
+    }
 }
