@@ -65,11 +65,23 @@ namespace Dicelocked.Commands
         public override Result execution(Controller commandHandler)
         {
             Console.WriteLine("Command executing");
-            switch (received)
+            switch (received.Substring(0, 4))
             {
-                case "afi-n?":
-                    commandHandler.CommandHandler.handle(new UpdateViewCommand(new AskForNameCommand()));
+                case "afi-":
+                    switch (received.Substring(received.IndexOf("-") + 1))
+                    {
+                        case "n?":
+                            commandHandler.CommandHandler.handle(new UpdateViewCommand(new AskForNameCommand()));
+                            break;
+                    }
                     break;
+                case "sgi-":
+                    string s;
+                    s = received.Substring(received.IndexOf("-") + 1, 6);
+                    Console.WriteLine(s);
+                    commandHandler.handle(new SetGameIDCommand(s));
+                    break;
+
             }
             return Result.success;
         }
@@ -79,6 +91,22 @@ namespace Dicelocked.Commands
             {
                 received = received.Substring(0, received.IndexOf("\r\n"));
             }
+        }
+    }
+
+    public class SetGameIDCommand : ControllerCommand
+    {
+        private string ID;
+
+        public SetGameIDCommand(string ID)
+        {
+            this.ID = ID;
+        }
+
+        public override Result execution(Controller commandHandler)
+        {
+            commandHandler.SetID(ID);
+            return Result.success;
         }
     }
 
@@ -96,4 +124,13 @@ namespace Dicelocked.Commands
         }
     }
 
+    public class LeaveGameCommand : ControllerCommand
+    {
+        public override Result execution(Controller commandHandler)
+        {
+            commandHandler.Send("lgc-");
+            commandHandler.ClearID();
+            return base.execution(commandHandler);
+        }
+    }
 }

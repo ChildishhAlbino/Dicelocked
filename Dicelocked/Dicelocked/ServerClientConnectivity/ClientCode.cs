@@ -124,6 +124,7 @@ namespace Dicelocked.ServerClientConncetivity
                         String str = state.sb.ToString();
                         Console.WriteLine(str);
                         ch.handle(new ParseRecievedCommand(str));
+                        state.sb.Clear();
                     }
                     // look for more data    
                 }

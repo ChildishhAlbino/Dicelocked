@@ -7,10 +7,14 @@
         mc:Ignorable="d"
         Title="GUIView" Height="500" Width="500">
     <Grid Height="469" VerticalAlignment="Bottom">
-        <Button x:Name="Button" Width="200" Height="50" Content="Press Me" Click="OnButtonClick"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="245*"/>
+            <ColumnDefinition Width="247*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Button" Content="Press Me" Click="OnButtonClick" Margin="146,210,146,210" Grid.ColumnSpan="2"/>
         <TextBox x:Name="enterName_texty" HorizontalAlignment="Left" Height="50" TextWrapping="Wrap" 
-                 Text="Please enter a name!" VerticalAlignment="Top" Width="200" Margin="146,210,0,0" Visibility="Hidden"/>
-        <Button x:Name="enterName_Button" Content="Press to enter name!" Margin="188,265,188,175" Click="enterName_Button_Click" Visibility="Hidden"/>
+                 Text="Please enter a name!" VerticalAlignment="Top" Width="266" Margin="114,209,0,0" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <Button x:Name="enterName_Button" Content="Press to enter name!" Margin="188,265,188,175" Click="enterName_Button_Click" Visibility="Hidden" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

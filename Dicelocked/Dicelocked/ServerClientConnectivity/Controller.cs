@@ -12,6 +12,7 @@ namespace Dicelocked.ServerClientConncetivity
     {
         private ICommandHandler<ViewCommand> commandHandler;
         public ClientConnectivity connection;
+        private string ID = null;
 
         public ICommandHandler<ViewCommand> CommandHandler
         {
@@ -47,6 +48,24 @@ namespace Dicelocked.ServerClientConncetivity
         {
             message += "\n";
             connection.Send((message));
+        }
+
+        public void SetID(string ID)
+        {
+            if(this.ID == null)
+            {
+                this.ID = ID;
+            }
+            else
+            {
+                Console.WriteLine(ID);
+                Console.WriteLine("ID already set, thanks!");
+            }
+        }
+
+        public void ClearID()
+        {
+            ID = null;
         }
     }
 }
