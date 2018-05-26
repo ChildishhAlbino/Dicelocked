@@ -6,7 +6,8 @@
 package server.Controller;
 
 import server.Commands.*;
-import server.Connectivity.Connectivity;
+import server.Commands.ConnectivityCommand.*;
+import server.Connectivity.*;
 import server.IComponent;
 
 /**
@@ -15,9 +16,7 @@ import server.IComponent;
  */
 public class Controller implements ICommandHandler<ControllerCommand>, IComponent {
 
-    private ICommandHandler<ModelCommand> ch_model;
-    private Connectivity connection;
-    private ICommandHandler<ConnectivityCommand> ch_connect;
+    private ICommandHandler<ModelCommand> ch;
 
     @Override
     public void Handle(ControllerCommand command) {
@@ -26,18 +25,16 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     @Override
     public void SetCommandHandler(ICommandHandler ch) {
-        this.ch_model = ch;
+        this.ch = ch;
     }
 
     @Override
     public void Start() {
-        connection = new Connectivity();
-        connection.SetCommandHandler(this);
-        connection.start();
+        ConnectivityCommandHandlerInstance.GetInstance().Handle(new StartupCommand(this));
     }
 
     @Override
     public ICommandHandler GetCommandHandler() {
-        return ch_model;
+        return ch;
     }
 }

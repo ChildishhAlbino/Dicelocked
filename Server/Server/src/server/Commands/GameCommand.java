@@ -12,5 +12,19 @@ import server.Model.Game;
  * @author conno
  */
 public abstract class GameCommand implements ICommand<Game> {
-
+    
+    public static class LeaveGameCommand extends GameCommand {
+        
+        private final String ID;
+        
+        public LeaveGameCommand(String ID) {
+            this.ID = ID;
+        }
+        
+        @Override
+        public ResultCode execute(Game commandHandler) {
+            commandHandler.PlayerLeave(ID);
+            return ResultCode.Success;
+        }
+    }
 }

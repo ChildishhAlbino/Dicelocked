@@ -15,6 +15,22 @@ import server.Model.Player;
  */
 public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
+    public static class StartupCommand extends ConnectivityCommand {
+
+        private final ICommandHandler<ControllerCommand> ch;
+
+        public StartupCommand(ICommandHandler<ControllerCommand> ch) {
+            this.ch = ch;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            commandHandler.SetCommandHandler(ch);
+            commandHandler.start();
+            return ResultCode.Success;
+        }
+    }
+
     public static class SendMessageCommand extends ConnectivityCommand {
 
         private final SocketHandler sh;
@@ -51,7 +67,7 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
         private final String ID;
         private final SocketHandler sh;
-        
+
         public PassToControllerCommand(String ID, SocketHandler sh) {
             this.ID = ID;
             this.sh = sh;
@@ -83,7 +99,7 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
         public ResultCode execute(Connectivity commandHandler) {
             switch (it) {
                 case name:
-                    sh.Send("afi-n");
+                    sh.Send("afi-n");// unecessary - use SendMessageCommand
                     break;
                 case move:
                     sh.Send("afi-m");
@@ -91,6 +107,25 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
                 case selection:
                     sh.Send("afi-sel");
             }
+            return ResultCode.Success;
+        }
+    }
+
+    public static class SendGameIDCommand extends ConnectivityCommand {
+
+        private final SocketHandler sh;
+        private final String ID;
+
+        public SendGameIDCommand(SocketHandler sh, String ID) {
+            this.sh = sh;
+            this.ID = ID;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            String s = "sgi-"+ID;
+            System.out.println(s);
+            sh.Send(s);
             return ResultCode.Success;
         }
     }

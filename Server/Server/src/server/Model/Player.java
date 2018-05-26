@@ -5,6 +5,10 @@
  */
 package server.Model;
 
+import server.Commands.GameCommand;
+import server.Commands.GameCommand.LeaveGameCommand;
+import server.Commands.ICommandHandler;
+
 /**
  *
  * @author conno
@@ -13,6 +17,8 @@ public class Player {
 
     private final String ID;
     private String name;
+
+    private ICommandHandler<GameCommand> ch;
 
     public Player(String ID) {
         this.ID = ID;
@@ -24,12 +30,20 @@ public class Player {
             this.name = name;
         }
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         String str = "";
         str += "Player ID: " + ID + "\n";
         str += "Name: " + name + "\n";
         return str;
+    }
+
+    public void SetCommandHandler(ICommandHandler<GameCommand> ch) {
+        this.ch = ch;
+    }
+
+    public void LeaveGame() {
+        ch.Handle(new LeaveGameCommand(ID));
     }
 }

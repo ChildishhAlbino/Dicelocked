@@ -7,7 +7,6 @@ package server.Connectivity;
 
 import java.io.*;
 import java.net.*;
-import java.util.Random;
 import server.Commands.*;
 import server.Commands.ConnectivityCommand.*;
 
@@ -90,8 +89,8 @@ public class SocketHandler extends Thread {
         while (name == null) {
             name = in.readLine();
         }
-        
-        name += Identification.ID.GenerateID(3);
+
+        name = Identification.ID.GenerateID_Name(3, name);
         return name;
     }
 }

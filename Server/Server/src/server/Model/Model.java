@@ -26,7 +26,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     public List<Game> waiting_games;
     public List<Game> full_games;
-    
+
     //public Map<String,Game> waiting_games_id; ask roland if i should replace with map
     //public Map<String,Game> full_games_id;
     public Model() {
@@ -41,7 +41,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     @Override
     public void Start() {
-        
+
     }
 
     @Override

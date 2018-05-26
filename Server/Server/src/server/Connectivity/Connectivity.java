@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.*;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import server.Commands.*;
 import server.Commands.ControllerCommand.*;
@@ -23,14 +24,15 @@ import server.IComponent;
 public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>, IComponent {
 
     private boolean listening = true; // bool to control while loop
-    private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
+    //private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
+
+    private HashMap<Integer, SocketHandler> socketHandlers;
     private final int PORT_NUMBER = 11000;
     private ICommandHandler<ControllerCommand> ch;
-    private static int ID = 0;
 
     public Connectivity() {
         super("ConnectivityManager");
-        socketHandlers = new ArrayList<>();
+        socketHandlers = new HashMap<>();
     }
 
     @Override
@@ -42,10 +44,10 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                 Socket clientSocket = socket.accept();
                 if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(clientSocket, GetID());
+                    sh = new SocketHandler(clientSocket, Identification.ID.GenerateID_Int(2));
                     sh.SetCommandHandler(this);
+                    socketHandlers.put(sh.GetID(), sh);
                     sh.start();
-                    socketHandlers.add(sh);
                 }
             }
         } catch (UnknownHostException ex) {
@@ -83,9 +85,9 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
 
     }
 
-    public static int GetID() {
-        ID++;
-        return ID;
+    public SocketHandler GetSocketHandlerByID(String ID) {
+        SocketHandler sh = socketHandlers.get(ID);
+        return sh;
     }
 
 }

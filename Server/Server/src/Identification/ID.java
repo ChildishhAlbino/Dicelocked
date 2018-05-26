@@ -17,18 +17,44 @@ public class ID {
 
     private static final List<String> ids_in_use = new ArrayList<>();
 
-    public static String GenerateID(int length) {
+    private static String GenerateID(int length, String identifier) {
         Random rand = new Random();
         int i = rand.nextInt(10);
-        String rStr = "_";
+        String rStr = identifier + "_";
         for (int j = 0; j < length; j++) {
             rStr += i;
             i = rand.nextInt(10);
         }
         if (ids_in_use.contains(rStr)) {
-            return GenerateID(length);
+            return GenerateID(length, identifier);
         } else {
+            ids_in_use.add(rStr);
             return rStr;
         }
+    }
+
+    public static String GenerateID_Name(int length, String identifier) {
+        return GenerateID(length, identifier);
+    }
+
+    public static String GenerateID_Number(int length) {
+        return GenerateID(length, "").substring(1);
+    }
+
+    public static int GenerateID_Int(int length) {
+        String s = GenerateID_Number(length);
+        int i = 0;
+        try {
+            i = Integer.parseInt(s.substring(1));
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing ID");
+            RemoveID(s);
+            i = GenerateID_Int(length);
+        }
+        return i;
+    }
+
+    public static void RemoveID(String ID) {
+        ids_in_use.remove(ID);
     }
 }

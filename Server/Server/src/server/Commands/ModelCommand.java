@@ -66,6 +66,7 @@ public abstract class ModelCommand implements ICommand<Model> {
     }
 
     public static class PassGamesListToViewCommand extends ModelCommand {
+
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.ch.Handle(new PrintGamesListCommand(commandHandler.waiting_games, game_type.waiting));
