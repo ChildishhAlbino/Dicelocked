@@ -91,18 +91,7 @@ public class SocketHandler extends Thread {
             name = in.readLine();
         }
         
-        name += GenerateID(3);
+        name += Identification.ID.GenerateID(3);
         return name;
-    }
-    
-    private String GenerateID(int length){
-        Random rand = new Random();
-        int i = rand.nextInt(10);
-        String rStr = "_";
-        for (int j = 0; j < length; j++) {
-            rStr += i;
-            i = rand.nextInt(10);
-        }      
-        return rStr;
     }
 }

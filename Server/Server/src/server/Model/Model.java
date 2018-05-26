@@ -7,6 +7,7 @@ package server.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import server.Commands.*;
 import server.Connectivity.SocketHandler;
 import server.IComponent;
@@ -25,9 +26,12 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     public List<Game> waiting_games;
     public List<Game> full_games;
-
+    
+    //public Map<String,Game> waiting_games_id; ask roland if i should replace with map
+    //public Map<String,Game> full_games_id;
     public Model() {
-        Start();
+        waiting_games = new ArrayList<>();
+        full_games = new ArrayList<>();
     }
 
     @Override
@@ -37,8 +41,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     @Override
     public void Start() {
-        waiting_games = new ArrayList<>();
-        full_games = new ArrayList<>();
+        
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
 
     public void FindGame(String ID, SocketHandler sh) {
         if (waiting_games == null || full_games == null) {
-            Start();
+            // error
         }
         if (waiting_games.isEmpty()) {
             System.out.println("No games found! Starting new one :D");

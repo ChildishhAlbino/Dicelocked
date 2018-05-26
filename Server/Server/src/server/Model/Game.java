@@ -28,9 +28,12 @@ public class Game implements ICommandHandler<GameCommand> {
     private final int BOARD_SIZE;
     private ICommandHandler<ModelCommand> ch;
     private boolean full = false;
+    
+    public final String ID;
 
     public Game(int BOARD_SIZE) {
         this.BOARD_SIZE = BOARD_SIZE;
+        this.ID = Identification.ID.GenerateID(6);
     }
 
     public void Init() {
@@ -76,7 +79,7 @@ public class Game implements ICommandHandler<GameCommand> {
     @Override
     public String toString() {
         String str = "";
-        str += "Game: \n";
+        str += "Game: " + ID + "\n";
         str += ("Players: " + players.size() + "\n");
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(ids.get(i));
