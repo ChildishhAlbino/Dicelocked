@@ -6,33 +6,38 @@
         xmlns:local="clr-namespace:Dicelocked"
         mc:Ignorable="d"
         Title="GUIView" Height="720" Width="1280">
-    <Grid x:Name="MainGrid" Background="#FFB6B6B6" TextElement.FontFamily="Arial" TextElement.FontSize="30" TextElement.FontWeight ="Bold">
+    <Grid x:Name="MainGrid" Background="#FFB6B6B6" TextElement.FontFamily="Arial" 
+          TextElement.FontSize="30" TextElement.FontWeight ="Bold">
         <StackPanel x:Name="PreGame_Grid" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid x:Name="SignUp_Grid">
+            <Grid x:Name="SignUp_Grid" Visibility="Collapsed">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-                    <TextBlock Text="Please enter your details to sign up!" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="Please enter your details to sign up!" 
+                               HorizontalAlignment="Center"></TextBlock>
                     <Separator Height="50" Visibility="Hidden"></Separator>
                     <TextBlock Text="Username:" HorizontalAlignment="Center"></TextBlock>
-                    <TextBox x:Name="UserNameSU_Textbox" Width="350" Height=" 50" FontFamily="Arial Black" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" 
+                    <TextBox x:Name="UsernameSU_Textbox" Width="350" Height=" 50"
+                             HorizontalAlignment="Center" 
                              VerticalAlignment="Center">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
+                    <Separator Height="15" Visibility="Hidden"></Separator>
                     <TextBlock Text="Password:" HorizontalAlignment="Center"></TextBlock>
-                    <TextBox x:Name="PasswordSU_Textbox" Width="350" Height=" 50" FontFamily="Arial Black" FontSize="36" FontWeight="Bold"  
+                    <TextBox x:Name="PasswordSU_Textbox" Width="350" Height=" 50" 
                              VerticalAlignment="Center">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
                     <Separator Height ="25" Visibility="Hidden"></Separator>
-                    <Button Width=" 350" Height="50" Content="GO!" FontWeight="Bold"/>
+                    <Button x:Name="SignUp_Button" Width=" 350" Height="50" Content="GO!" Click="SignUp_Button_Click"/>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="SignIn_Grid" Visibility="Collapsed">
+            <Grid x:Name="SignIn_Grid">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                    <TextBlock HorizontalAlignment="Center" Text="Please enter your sign in details!"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" 
+                               Text="Please enter your sign in details!"></TextBlock>
                     <Separator Height="50" Visibility="Hidden"></Separator>
                     <TextBlock HorizontalAlignment="Center" Text="Username:"></TextBlock>
                     <TextBox x:Name="UsernameSI_Textbox" Width="350" Height="50">
@@ -40,18 +45,20 @@
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
+                    <Separator Height="15" Visibility="Hidden"></Separator>
                     <TextBlock HorizontalAlignment="Center" Text="Password:"></TextBlock>
-                    <TextBox Width="350" Height="50">
+                    <TextBox x:Name="PasswordSI_Textbox" Width="350" Height="50">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
                     <Separator Height="25" Visibility="Hidden"></Separator>
-                    <Button Width="350" Height="50" Content="GO!"></Button>
+                    <Button x:Name="SignIn_Button" Width="350" Height="50" Content="GO!" Click="SignIn_Button_Click"></Button>
                 </StackPanel>
             </Grid>
             <Separator Height="50" Visibility="Hidden"></Separator>
-            <Button x:Name="ToggleButton" Content="Sign-Up instead" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="40" Click="ToggleButton_Click"/>
+            <Button x:Name="ToggleButton" Content="Sign-Up instead" HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" Width="250" Height="40" Click="ToggleButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

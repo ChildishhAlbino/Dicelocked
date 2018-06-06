@@ -130,7 +130,7 @@ namespace Dicelocked
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is Button)
+            if (sender is Button)
             {
                 if (SignIn_Grid.IsVisible)
                 {
@@ -148,6 +148,28 @@ namespace Dicelocked
             else
             {
                 Console.WriteLine("Shit has his the fan");
+            }
+        }
+
+        private void SignUp_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (UsernameSU_Textbox.Text != "" && PasswordSU_Textbox.Text != "")
+            {
+                string s = $"{UsernameSU_Textbox.Text}-{PasswordSU_Textbox.Text}";
+                Console.WriteLine(s);
+                UsernameSU_Textbox.Clear();
+                PasswordSU_Textbox.Clear();
+            }
+        }
+
+        private void SignIn_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (UsernameSI_Textbox.Text != "" && PasswordSI_Textbox.Text != "")
+            {
+                string s = $"{UsernameSI_Textbox.Text}-{PasswordSI_Textbox.Text}";
+                Console.WriteLine(s);
+                UsernameSI_Textbox.Clear();
+                PasswordSI_Textbox.Clear();
             }
         }
     }
