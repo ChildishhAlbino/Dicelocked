@@ -8,6 +8,7 @@ package server.Controller;
 import server.Commands.*;
 import server.Commands.ConnectivityCommand.*;
 import server.Connectivity.*;
+import server.DB.DB;
 import server.IComponent;
 
 /**
@@ -30,6 +31,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     @Override
     public void Start() {
+        DB.GetDB().Handle(new DBCommand.HashPasswordCommand("lol"));
         ConnectivityCommandHandlerInstance.GetInstance().Handle(new StartupCommand(this));
     }
 

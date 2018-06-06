@@ -5,16 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dicelocked"
         mc:Ignorable="d"
-        Title="GUIView" Height="500" Width="500">
-    <Grid Height="469" VerticalAlignment="Bottom">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="245*"/>
-            <ColumnDefinition Width="247*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="Button" Content="Press Me" Click="OnButtonClick" Margin="146,210,146,210" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="enterName_texty" HorizontalAlignment="Left" Height="50" TextWrapping="Wrap" 
-                 Text="Please enter a name!" VerticalAlignment="Top" Width="266" Margin="114,209,0,0" Grid.ColumnSpan="2" Visibility="Hidden"/>
-        <Button x:Name="enterName_Button" Content="Press to enter name!" Margin="188,265,188,175" Click="enterName_Button_Click" Visibility="Hidden" Grid.ColumnSpan="2"/>
-
+        Title="GUIView" Height="720" Width="1280">
+    <Grid x:Name="MainGrid" Background="#FFB6B6B6" TextElement.FontFamily="Arial" TextElement.FontSize="30" TextElement.FontWeight ="Bold">
+        <StackPanel x:Name="PreGame_Grid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid x:Name="SignUp_Grid">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                    <TextBlock Text="Please enter your details to sign up!" HorizontalAlignment="Center"></TextBlock>
+                    <Separator Height="50" Visibility="Hidden"></Separator>
+                    <TextBlock Text="Username:" HorizontalAlignment="Center"></TextBlock>
+                    <TextBox x:Name="UserNameSU_Textbox" Width="350" Height=" 50" FontFamily="Arial Black" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" 
+                             VerticalAlignment="Center">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <TextBlock Text="Password:" HorizontalAlignment="Center"></TextBlock>
+                    <TextBox x:Name="PasswordSU_Textbox" Width="350" Height=" 50" FontFamily="Arial Black" FontSize="36" FontWeight="Bold"  
+                             VerticalAlignment="Center">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <Separator Height ="25" Visibility="Hidden"></Separator>
+                    <Button Width=" 350" Height="50" Content="GO!" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="SignIn_Grid" Visibility="Collapsed">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <TextBlock HorizontalAlignment="Center" Text="Please enter your sign in details!"></TextBlock>
+                    <Separator Height="50" Visibility="Hidden"></Separator>
+                    <TextBlock HorizontalAlignment="Center" Text="Username:"></TextBlock>
+                    <TextBox x:Name="UsernameSI_Textbox" Width="350" Height="50">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <TextBlock HorizontalAlignment="Center" Text="Password:"></TextBlock>
+                    <TextBox Width="350" Height="50">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <Separator Height="25" Visibility="Hidden"></Separator>
+                    <Button Width="350" Height="50" Content="GO!"></Button>
+                </StackPanel>
+            </Grid>
+            <Separator Height="50" Visibility="Hidden"></Separator>
+            <Button x:Name="ToggleButton" Content="Sign-Up instead" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="40" Click="ToggleButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

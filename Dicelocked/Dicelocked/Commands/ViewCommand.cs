@@ -53,7 +53,7 @@ namespace Dicelocked.Commands
     {
         public override Result execution(GUIView commandHandler)
         {
-            commandHandler.AskForName();
+            //commandHandler.AskForName();
             return Result.success;
         }
     }

@@ -49,6 +49,7 @@ namespace Dicelocked
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
+
             if (sender is Button)
             {
                 Button button = (Button)sender;
@@ -58,11 +59,6 @@ namespace Dicelocked
             {
                 Console.WriteLine("shit has hit the fan");
             }
-        }
-
-        public void UpdateGUI()
-        {
-
         }
 
         public void handle(ViewCommand command)
@@ -118,33 +114,40 @@ namespace Dicelocked
             base.OnMouseMove(e);
         }
 
-        public void AskForName()
-        {
-            //Console.WriteLine("Asking");
-            enterName_texty.Visibility = Visibility.Visible;
-            enterName_Button.Visibility = Visibility.Visible;
-        }
-
-        private void enterName_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (enterName_texty.Text != null || enterName_texty.Text != "Please enter a name" || enterName_texty.Text != "Please enter a propper name!")
-            {
-                commandHandler.handle(new SendMessageCommand(enterName_texty.Text));
-                enterName_texty.Visibility = Visibility.Hidden;
-                enterName_Button.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                enterName_texty.Text = "Please enter a proper name!";
-            }
-        }
-
         public void AddToBacklog(ViewCommand vc)
         {
             lock (commandBacklog)
             {
                 commandBacklog.Add(vc);
                 //InvalidateVisual();
+            }
+        }
+
+        public void UpdateGUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button)
+            {
+                if (SignIn_Grid.IsVisible)
+                {
+                    SignIn_Grid.Visibility = Visibility.Collapsed;
+                    SignUp_Grid.Visibility = Visibility.Visible;
+                    ToggleButton.Content = "Sign In instead!";
+                }
+                else if (SignUp_Grid.IsVisible)
+                {
+                    SignUp_Grid.Visibility = Visibility.Collapsed;
+                    SignIn_Grid.Visibility = Visibility.Visible;
+                    ToggleButton.Content = "Sign Up instead!";
+                }
+            }
+            else
+            {
+                Console.WriteLine("Shit has his the fan");
             }
         }
     }
