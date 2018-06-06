@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Timers;
+using System.Security.Cryptography;
 
 namespace Dicelocked
 {
@@ -24,6 +25,11 @@ namespace Dicelocked
     public partial class GUIView : Window, IView, ICommandHandler<ViewCommand>
     {
         private ICommandHandler<ControllerCommand> commandHandler;
+        private enum GridType
+        {
+            Sign_Up,
+            Sign_In,
+        }
         private List<ViewCommand> commandBacklog;
         public GUIView()
         {
@@ -44,20 +50,6 @@ namespace Dicelocked
             set
             {
                 commandHandler = value;
-            }
-        }
-
-        private void OnButtonClick(object sender, RoutedEventArgs e)
-        {
-
-            if (sender is Button)
-            {
-                Button button = (Button)sender;
-                CommandHandler.handle(new AddIntCommand(button));
-            }
-            else
-            {
-                Console.WriteLine("shit has hit the fan");
             }
         }
 
@@ -136,12 +128,14 @@ namespace Dicelocked
                 {
                     SignIn_Grid.Visibility = Visibility.Collapsed;
                     SignUp_Grid.Visibility = Visibility.Visible;
+                    ClearTextboxes(GridType.Sign_In);
                     ToggleButton.Content = "Sign In instead!";
                 }
                 else if (SignUp_Grid.IsVisible)
                 {
                     SignUp_Grid.Visibility = Visibility.Collapsed;
                     SignIn_Grid.Visibility = Visibility.Visible;
+                    ClearTextboxes(GridType.Sign_Up);
                     ToggleButton.Content = "Sign Up instead!";
                 }
             }
@@ -150,26 +144,77 @@ namespace Dicelocked
                 Console.WriteLine("Shit has his the fan");
             }
         }
-
-        private void SignUp_Button_Click(object sender, RoutedEventArgs e)
+        private void ClearTextboxes(GridType g)
         {
-            if (UsernameSU_Textbox.Text != "" && PasswordSU_Textbox.Text != "")
+            switch (g)
             {
-                string s = $"{UsernameSU_Textbox.Text}-{PasswordSU_Textbox.Text}";
-                Console.WriteLine(s);
-                UsernameSU_Textbox.Clear();
-                PasswordSU_Textbox.Clear();
+                case GridType.Sign_In:
+                    UsernameSI_Textbox.Clear();
+                    PasswordSI_Textbox.Clear();
+                    break;
+                case GridType.Sign_Up:
+                    UsernameSU_Textbox.Clear();
+                    PasswordSU_Textbox.Clear();
+                    break;
+                default:
+                    break;
             }
         }
-
-        private void SignIn_Button_Click(object sender, RoutedEventArgs e)
+        private string SignInGoButtonPressed()
         {
             if (UsernameSI_Textbox.Text != "" && PasswordSI_Textbox.Text != "")
             {
-                string s = $"{UsernameSI_Textbox.Text}-{PasswordSI_Textbox.Text}";
-                Console.WriteLine(s);
-                UsernameSI_Textbox.Clear();
-                PasswordSI_Textbox.Clear();
+                string s = GeneratePlayerPlusHash(UsernameSI_Textbox.Text, HashPassword(PasswordSI_Textbox.Text));
+                ClearTextboxes(GridType.Sign_In);
+                return s;
+            }
+            return null;
+        }
+
+        private string SignUpGoButtonPressed()
+        {
+            if (UsernameSU_Textbox.Text != "" && PasswordSU_Textbox.Text != "")
+            {
+                string s = GeneratePlayerPlusHash(UsernameSU_Textbox.Text, HashPassword(PasswordSU_Textbox.Text));
+                ClearTextboxes(GridType.Sign_Up);
+                return s;
+            }
+            return null;
+        }
+
+        private string GeneratePlayerPlusHash(string s1, string s2)
+        {
+            return $"{s1}--{s2}";
+        }
+
+        private string HashPassword(string toBeHashed)
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(toBeHashed);
+            SHA256Managed sha = new SHA256Managed();
+            byte[] hashBytes = sha.ComputeHash(bytes);
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in hashBytes)
+            {
+                sb.AppendFormat("{0:x2}", b);
+            }
+            return sb.ToString();
+        }
+
+        private void GOButton_Click(object sender, RoutedEventArgs e)
+        {
+            string userPlusHash = string.Empty;
+            if (SignUp_Grid.IsVisible)
+            {
+                userPlusHash = SignUpGoButtonPressed();
+            }
+            else if (SignIn_Grid.IsVisible)
+            {
+                userPlusHash = SignInGoButtonPressed();
+            }
+            if(userPlusHash != null)
+            {
+                Console.WriteLine(userPlusHash);
+                CommandHandler.handle(new ConnectToServerCommand());
             }
         }
     }

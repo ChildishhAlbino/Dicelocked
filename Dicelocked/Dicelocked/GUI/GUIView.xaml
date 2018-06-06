@@ -31,7 +31,7 @@
                         </TextBox.Effect>
                     </TextBox>
                     <Separator Height ="25" Visibility="Hidden"></Separator>
-                    <Button x:Name="SignUp_Button" Width=" 350" Height="50" Content="GO!" Click="SignUp_Button_Click"/>
+                    <Button x:Name="SignUp_Button" Width=" 350" Height="50" Content="GO!" Click="GOButton_Click"/>
                 </StackPanel>
             </Grid>
             <Grid x:Name="SignIn_Grid">
@@ -53,7 +53,7 @@
                         </TextBox.Effect>
                     </TextBox>
                     <Separator Height="25" Visibility="Hidden"></Separator>
-                    <Button x:Name="SignIn_Button" Width="350" Height="50" Content="GO!" Click="SignIn_Button_Click"></Button>
+                    <Button x:Name="SignIn_Button" Width="350" Height="50" Content="GO!" Click="GOButton_Click"></Button>
                 </StackPanel>
             </Grid>
             <Separator Height="50" Visibility="Hidden"></Separator>
