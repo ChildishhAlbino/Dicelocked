@@ -203,18 +203,22 @@ namespace Dicelocked
         private void GOButton_Click(object sender, RoutedEventArgs e)
         {
             string userPlusHash = string.Empty;
+            LoginType l = default(LoginType);
             if (SignUp_Grid.IsVisible)
             {
                 userPlusHash = SignUpGoButtonPressed();
+                l = LoginType.Sign_Up;
             }
             else if (SignIn_Grid.IsVisible)
             {
                 userPlusHash = SignInGoButtonPressed();
+                l = LoginType.Sign_In;
             }
             if(userPlusHash != null)
             {
                 Console.WriteLine(userPlusHash);
                 CommandHandler.handle(new ConnectToServerCommand());
+                CommandHandler.handle(new SendLogonInfoCommand(userPlusHash, l));
             }
         }
     }

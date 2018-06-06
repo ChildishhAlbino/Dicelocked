@@ -8,6 +8,12 @@ using System.Windows.Controls;
 
 namespace Dicelocked.Commands
 {
+    public enum LoginType
+    {
+        Sign_Up,
+        Sign_In,
+    }
+
     public abstract class ControllerCommand : ICommand<Controller>
     {
         public virtual Result execution(Controller commandHandler)
@@ -101,7 +107,42 @@ namespace Dicelocked.Commands
         {
             commandHandler.Send("lgc-");
             commandHandler.ClearID();
-            return base.execution(commandHandler);
+            return Result.success;
+        }
+    }
+
+    public class SendLogonInfoCommand : ControllerCommand
+    {
+        private string s;
+       
+        private LoginType l;
+        public SendLogonInfoCommand(string s, LoginType l)
+        {
+            this.s = s;
+            this.l = l;
+        }
+        public override Result execution(Controller commandHandler)
+        {
+            string send = null;
+            switch (l)
+            {
+                case LoginType.Sign_In:
+                    send = $"sii-{s}";
+                    break;
+
+                case LoginType.Sign_Up:
+                    send = $"sui-{s}";
+                    break;
+                default:
+                    //error - log this
+                    break;
+            }
+            if(send != null)
+            {
+                commandHandler.Send(send);
+                return Result.success;
+            }
+            return Result.failure;
         }
     }
 }

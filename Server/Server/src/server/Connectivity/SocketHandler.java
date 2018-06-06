@@ -37,7 +37,8 @@ public class SocketHandler extends Thread {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            ch.Handle(new PassToControllerCommand(ListenForPlayerName(), this));
+            WaitForLogon();
+            //ch.Handle(new PassToControllerCommand(ListenForPlayerName(), this));
             while (socket.isConnected() && listening) {
                 incomming = in.readLine();
                 ch.Handle(new ProcessIncomingMessageCommand(incomming));
@@ -92,5 +93,15 @@ public class SocketHandler extends Thread {
 
         name = Identification.ID.GenerateID_Name(3, name);
         return name;
+    }
+
+    private void WaitForLogon() throws IOException {
+        String s = null;
+
+        while (s == null) {
+            s = in.readLine();
+        }
+        
+        System.out.println(s);
     }
 }
