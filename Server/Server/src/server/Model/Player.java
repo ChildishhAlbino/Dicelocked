@@ -6,7 +6,6 @@
 package server.Model;
 
 import server.Commands.GameCommand;
-import server.Commands.GameCommand.LeaveGameCommand;
 import server.Commands.ICommandHandler;
 
 /**
@@ -15,20 +14,14 @@ import server.Commands.ICommandHandler;
  */
 public class Player {
 
-    private final String ID;
-    private String name;
+    private final int ID;
+    private final String name;
 
     private ICommandHandler<GameCommand> ch;
 
-    public Player(String ID) {
+    public Player(int ID, String name) {
         this.ID = ID;
-        name = ID.substring(0, ID.indexOf("_"));
-    }
-
-    public void SetName(String name) {
-        if (this.name == null) {
-            this.name = name;
-        }
+        this.name = name;
     }
 
     @Override
@@ -44,6 +37,10 @@ public class Player {
     }
 
     public void LeaveGame() {
-        ch.Handle(new LeaveGameCommand(ID));
+        //ch.Handle(new LeaveGameCommand(ID));
+    }
+    
+    public int GetID(){
+        return ID;
     }
 }

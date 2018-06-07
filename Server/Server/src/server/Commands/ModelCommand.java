@@ -8,6 +8,7 @@ package server.Commands;
 import server.Commands.ViewCommand.*;
 import server.Connectivity.SocketHandler;
 import server.Model.Model;
+import server.Model.Player;
 
 /**
  *
@@ -40,17 +41,17 @@ public abstract class ModelCommand implements ICommand<Model> {
 
     public static class FindGameCommand extends ModelCommand {
 
-        private final String ID;
+        private final Player p;
         private final SocketHandler sh;
 
-        public FindGameCommand(String ID, SocketHandler sh) {
-            this.ID = ID;
+        public FindGameCommand(Player ID, SocketHandler sh) {
+            this.p = ID;
             this.sh = sh;
         }
 
         @Override
         public ResultCode execute(Model commandHandler) {
-            commandHandler.FindGame(ID, sh);
+            commandHandler.FindGame(p, sh);
             return ResultCode.Success;
         }
     }

@@ -10,6 +10,7 @@ import server.Commands.DBCommand.*;
 import server.Connectivity.*;
 import server.Connectivity.Connectivity.LoginType;
 import server.DB.DB;
+import server.Model.Player;
 
 /**
  *
@@ -67,17 +68,17 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
     public static class PassToControllerCommand extends ConnectivityCommand {
 
-        private final String ID;
+        private final Player p;
         private final SocketHandler sh;
 
-        public PassToControllerCommand(String ID, SocketHandler sh) {
-            this.ID = ID;
+        public PassToControllerCommand(Player p, SocketHandler sh) {
             this.sh = sh;
+            this.p = p;
         }
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new PassToModelCommand(ID, sh));
+            commandHandler.GetCommandHandler().Handle(new PassToModelCommand(p, sh));
             return ResultCode.Success;
         }
     }

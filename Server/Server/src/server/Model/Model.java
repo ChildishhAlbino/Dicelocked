@@ -55,27 +55,29 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
         this.ch = ch;
     }
 
-    public void NewGame(String ID, SocketHandler sh) {
+    public void NewGame(Player p, SocketHandler sh) {
         Game game = new Game(BOARD_SIZE);
         games.add(game);
         game.Init();
-        game.PlayerJoin(ID, sh);
+        game.PlayerJoin(p, sh);
     }
-    
-    public void FindGame(String ID, SocketHandler sh) {
+
+    public void FindGame(Player p, SocketHandler sh) {
         if (games.isEmpty()) {
             System.out.println("There were no games, starting new one!");
-            NewGame(ID, sh);
+            NewGame(p, sh);
         } else {
             for (Game game : games) {
                 if (game.GotSpace()) {
                     System.out.println("Found a game, joining now!");
-                    game.PlayerJoin(ID, sh);
+                    game.PlayerJoin(p, sh);
+                    break;
+                } else {
+                    System.out.println("Couldn't find a waiting game! Creating new one :D");
+                    NewGame(p, sh);
                     break;
                 }
             }
-            System.out.println("Couldn't find a waiting game! Creating new one :D");
-            NewGame(ID, sh);
         }
         SortGamesListByWaiting();
     }

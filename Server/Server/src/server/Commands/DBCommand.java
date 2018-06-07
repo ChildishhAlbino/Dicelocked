@@ -5,8 +5,10 @@
  */
 package server.Commands;
 
+import server.Connectivity.Connectivity;
 import server.Connectivity.SocketHandler;
 import server.DB.DB;
+import server.Model.Player;
 
 /**
  *
@@ -50,10 +52,20 @@ public abstract class DBCommand implements ICommand<DB> {
         @Override
         public ResultCode execute(DB commandHandler) {
             //System.out.println("SignInCommand");
-            if (commandHandler.CheckLoginInfo(ExtractUserName(logonCode),
+            if (commandHandler.CanSignIn(ExtractUserName(logonCode),
                     ExtractPassword(logonCode))) {
                 // get player code
-                // pass to sh
+                int i = commandHandler.SignIn(ExtractUserName(logonCode),
+                        ExtractPassword(logonCode));
+                // pass to game
+                String s = commandHandler.GetPlayerNameByID(i);
+                if ((s) != null) {
+                    Connectivity.GetInstance().Handle(
+                            new ConnectivityCommand.PassToControllerCommand(
+                                    new Player(i, s), sh));
+                } else {
+                    return ResultCode.Failure;
+                }
                 return ResultCode.Success;
             }
             return ResultCode.Failure;
@@ -72,6 +84,7 @@ public abstract class DBCommand implements ICommand<DB> {
 
         private final SocketHandler sh;
         private final String logonCode;
+        private boolean canProceed = true;
 
         public SignUpCommand(SocketHandler sh, String logonCode) {
             this.sh = sh;
@@ -79,22 +92,26 @@ public abstract class DBCommand implements ICommand<DB> {
         }
 
         @Override
-        public ResultCode execute(DB commandHandler) {
-            //Attempt to add to Players Table
-            if(commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)) == -1 && 
-                    commandHandler.CheckLoginInfo(ExtractUserName(logonCode), 
-                            ExtractPassword(logonCode))){
-                
+        public ResultCode execute(DB commandHandler) {         
+            if(commandHandler.UserExists(ExtractUserName(logonCode))){
+                System.out.println("User already detected!");
+                canProceed = false; // check if username in users db
+            }
+            if(commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)) != -1){
+                System.out.println("Player already detected");
+                canProceed = false; // check if name in players db
+            }
+            
+            if(canProceed){
+                // if not, begin signup process
                 commandHandler.AddPlayerToPlayersTable(ExtractScreenName(logonCode));
-                //add username, password and index of player to user_login
-                System.out.println("Added player, now adding user");
-                commandHandler.CheckSignUp(ExtractUserName(logonCode),
-                    ExtractPassword(logonCode), commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)));
+                commandHandler.SignUpUser(ExtractUserName(logonCode), ExtractPassword(logonCode), 
+                        commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)));
                 return ResultCode.Success;
             }
             else{
                 return ResultCode.Failure;
-            }
+            } 
         }
 
         private String ExtractUserName(String lc) {

@@ -5,12 +5,10 @@
  */
 package server.Commands;
 
-import java.util.List;
 import server.Commands.ModelCommand.*;
 import server.Connectivity.SocketHandler;
 import server.Controller.Controller;
-import server.Model.Game;
-import server.Model.Model;
+import server.Model.Player;
 
 /**
  *
@@ -44,17 +42,17 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
     public static class PassToModelCommand extends ControllerCommand {
 
-        private final String ID;
+        private final Player p;
         private final SocketHandler sh;
 
-        public PassToModelCommand(String ID, SocketHandler sh) {
-            this.ID = ID;
+        public PassToModelCommand(Player ID, SocketHandler sh) {
+            this.p = ID;
             this.sh = sh;
         }
 
         @Override
         public ResultCode execute(Controller commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new FindGameCommand(ID, sh));
+            commandHandler.GetCommandHandler().Handle(new FindGameCommand(p, sh));
             return ResultCode.Success;
         }
     }

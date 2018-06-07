@@ -82,7 +82,7 @@ public class DB implements ICommandHandler<DBCommand> {
         return null;
     }
 
-    public boolean CheckLoginInfo(String username, String hash) {
+    public boolean CanSignIn(String username, String hash) {
         //System.out.println("checking information...");
         if (ConnectToDB()) {
             try {
@@ -92,8 +92,8 @@ public class DB implements ICommandHandler<DBCommand> {
                 ps.setString(2, hash);
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
-                if(rs.next()){
-                    System.out.println("Login Successful");
+                if (rs.next()) {
+                    System.out.println("Login will be Successful");
                     return true;
                 }
                 System.out.println("Wrong password!");
@@ -102,25 +102,48 @@ public class DB implements ICommandHandler<DBCommand> {
                 System.out.println(ex.toString());
             }
         }
+        System.out.println("User cannot sign in!");
         return false;
     }
-    
-    public int SignIn(String username, String hash){
-        // returns PlayerID from username
-        return 0;
-    }  
 
-    public void CheckSignUp(String username, String hash, int ID) {
+    public boolean UserExists(String username) {
         if (ConnectToDB()) {
-            // Check Login info doesn't already exist
-            if (!CheckLoginInfo(username, hash)) {
-                // if so; signup
-                System.out.println("User not found so we'll sign you up!");
-                SignUpUser(username, hash, ID);
-            } else {
-                // else, explain they already have signup details
+            try {
+                String sql = "SELECT * FROM User_Login WHERE Username = ?";
+                PreparedStatement ps = connect.prepareStatement(sql);
+                ps.setString(1, username);
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
+                if (rs.next()) {
+                    return true;
+                }
+            } catch (SQLException ex) {
+                System.out.println("Username already exists");
             }
         }
+        return false;
+    }
+
+    public int SignIn(String username, String hash) {
+        int i = -1;
+        try {
+            // returns PlayerID from username
+
+            System.out.println(" Signing in!");
+            String sql = "SELECT Player_ID FROM User_Login WHERE Username = ? && PasswordHash = ?";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, hash);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {
+                System.out.println("Found player!");
+                i = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return i;
     }
 
     public void SignUpUser(String username, String hash, int ID) {
@@ -133,7 +156,7 @@ public class DB implements ICommandHandler<DBCommand> {
                 ps.setInt(3, ID);
                 ps.execute();
             } catch (SQLException ex) {
-                if(ex.toString().contains("Duplicate entry")){
+                if (ex.toString().contains("Duplicate entry")) {
                     System.out.println("Username already in use!");
                     // let client know
                 }
@@ -151,7 +174,7 @@ public class DB implements ICommandHandler<DBCommand> {
                 return true;
             } catch (SQLException ex) {
                 //Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-                if(ex.toString().contains("Duplicate entry")){
+                if (ex.toString().contains("Duplicate entry")) {
                     System.out.println("Player Name already in use!");
                     // let client know
                 }
@@ -172,14 +195,29 @@ public class DB implements ICommandHandler<DBCommand> {
                 if (rs.next()) {
                     i = rs.getInt("RecordID");
                 }
-                else{
-                    // couldn't find player by name
-                    System.out.println("Problems");
-                }
             } catch (SQLException ex) {
                 Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return i;
+    }
+
+    public String GetPlayerNameByID(int ID) {
+        String s = null;
+        if (ConnectToDB()) {
+            try {
+                String sql = "SELECT PlayerName FROM players WHERE RecordID = ?";
+                PreparedStatement ps = connect.prepareStatement(sql);
+                ps.setInt(1, ID);
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
+                if (rs.next()) {
+                    s = rs.getString(1);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return s;
     }
 }

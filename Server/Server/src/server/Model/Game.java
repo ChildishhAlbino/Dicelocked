@@ -21,8 +21,7 @@ public class Game implements ICommandHandler<GameCommand> {
 
     private List<Board> boards;
     private List<String> ids;
-    private HashMap<String, Player> players;
-    //private List<Player> players;
+    private HashMap<Integer, Player> players;
     private HashMap<Player, SocketHandler> PlayerToSocket;
     private final int MAX_PLAYERS = 2;
     private final int BOARD_SIZE;
@@ -69,17 +68,16 @@ public class Game implements ICommandHandler<GameCommand> {
         return ch;
     }
 
-    public void PlayerJoin(String ID, SocketHandler sh) {
+    public void PlayerJoin(Player p, SocketHandler sh) {
 
-        Player player = new Player(ID);
-        PlayerToSocket.put(player, sh);
-        ids.add(ID);
-        players.put(ID, player);
-        player.SetCommandHandler(this);
+        PlayerToSocket.put(p, sh);
+        //ids.add(ID);
+        players.put(p.GetID(), p);
+        p.SetCommandHandler(this);
         if (players.size() == MAX_PLAYERS) {
             full = true;
         }
-        SendGameID(player);
+        SendGameID(p);
     }
 
     public void PlayerLeave(String ID) {
@@ -96,9 +94,12 @@ public class Game implements ICommandHandler<GameCommand> {
         String str = "";
         str += "Game: " + ID + "\n";
         str += ("Players: " + players.size() + "\n");
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(ids.get(i));
-            str += player.toString();
+//        for (int i = 0; i < players.size(); i++) {
+//            Player player = players.get(ids.get(i));
+//            str += player.toString();
+//        }
+        for (Player p : players.values()){
+            str += p.toString();
         }
         return str;
     }
