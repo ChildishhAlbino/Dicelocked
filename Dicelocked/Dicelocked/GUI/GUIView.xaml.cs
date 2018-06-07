@@ -155,6 +155,7 @@ namespace Dicelocked
                 case GridType.Sign_Up:
                     UsernameSU_Textbox.Clear();
                     PasswordSU_Textbox.Clear();
+                    ScreenNameSU_Textbox.Clear();
                     break;
                 default:
                     break;
@@ -173,9 +174,9 @@ namespace Dicelocked
 
         private string SignUpGoButtonPressed()
         {
-            if (UsernameSU_Textbox.Text != "" && PasswordSU_Textbox.Text != "")
+            if (UsernameSU_Textbox.Text != "" && PasswordSU_Textbox.Text != "" && ScreenNameSU_Textbox.Text != "")
             {
-                string s = GeneratePlayerPlusHash(UsernameSU_Textbox.Text, HashPassword(PasswordSU_Textbox.Text));
+                string s = GenerateSignUpCode(UsernameSU_Textbox.Text, HashPassword(PasswordSU_Textbox.Text), ScreenNameSU_Textbox.Text);
                 ClearTextboxes(GridType.Sign_Up);
                 return s;
             }
@@ -185,6 +186,11 @@ namespace Dicelocked
         private string GeneratePlayerPlusHash(string s1, string s2)
         {
             return $"{s1}--{s2}";
+        }
+
+        private string GenerateSignUpCode(string s1, string s2, string s3)
+        {
+            return $"{s1}--{s2}---{s3}";
         }
 
         private string HashPassword(string toBeHashed)

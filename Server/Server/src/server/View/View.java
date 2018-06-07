@@ -50,13 +50,13 @@ public class View implements ICommandHandler<ViewCommand>, IComponent {
         }
     }
 
-    public void PrintGamesList(List<Game> games, game_type gt) {
+    public void PrintGamesList(List<Game> games) {
         if (games != null) {
             if (games.isEmpty()) {
-                System.out.println("No " + gt.toString() + " games rn!\n");
+                System.out.println("No games rn!\n");
                 return;
             }
-            System.out.println(gt.toString().toUpperCase() + ":\n");
+            System.out.println(games.size() + " games in session!");
             for (int i = 0; i < games.size(); i++) {
                 Game game = games.get(i);
                 PrintGame(game);

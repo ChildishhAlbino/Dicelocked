@@ -7,6 +7,8 @@ package server.Connectivity;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import server.Commands.*;
 import server.Commands.ConnectivityCommand.*;
 
@@ -37,7 +39,7 @@ public class SocketHandler extends Thread {
             String incomming = null;
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            WaitForLogon();
+            WaitForLogonAttempt();
             //ch.Handle(new PassToControllerCommand(ListenForPlayerName(), this));
             while (socket.isConnected() && listening) {
                 incomming = in.readLine();
@@ -83,25 +85,12 @@ public class SocketHandler extends Thread {
         return ch;
     }
 
-    private String ListenForPlayerName() throws IOException {
-        String name = null;
-        ch.Handle(new AskForInputCommand(this, AskForInputCommand.InputType.name));
-        System.out.println("Sent command!");
-        while (name == null) {
-            name = in.readLine();
-        }
-
-        name = Identification.ID.GenerateID_Name(3, name);
-        return name;
-    }
-
-    private void WaitForLogon() throws IOException {
+    private void WaitForLogonAttempt() throws IOException {
         String s = null;
-
         while (s == null) {
             s = in.readLine();
         }
-        
         System.out.println(s);
+        ch.Handle(new ParseLogonAttempt(this, s));
     }
 }

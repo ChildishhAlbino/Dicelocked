@@ -8,7 +8,6 @@ package server.Commands;
 import server.Commands.ViewCommand.*;
 import server.Connectivity.SocketHandler;
 import server.Model.Model;
-import server.Model.Model.game_type;
 
 /**
  *
@@ -69,8 +68,7 @@ public abstract class ModelCommand implements ICommand<Model> {
 
         @Override
         public ResultCode execute(Model commandHandler) {
-            commandHandler.ch.Handle(new PrintGamesListCommand(commandHandler.waiting_games, game_type.waiting));
-            commandHandler.ch.Handle(new PrintGamesListCommand(commandHandler.full_games, game_type.full));
+            commandHandler.ch.Handle(new PrintGamesListCommand(commandHandler.games));
             return ResultCode.Success;
         }
     }

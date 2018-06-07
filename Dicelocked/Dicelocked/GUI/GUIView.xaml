@@ -9,7 +9,7 @@
     <Grid x:Name="MainGrid" Background="#FFB6B6B6" TextElement.FontFamily="Arial" 
           TextElement.FontSize="30" TextElement.FontWeight ="Bold">
         <StackPanel x:Name="PreGame_Grid" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid x:Name="SignUp_Grid" Visibility="Collapsed">
+            <Grid x:Name="SignUp_Grid" Background="#FF3A479B" Visibility="Collapsed" >
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" >
                     <TextBlock Text="Please enter your details to sign up!" 
                                HorizontalAlignment="Center"></TextBlock>
@@ -31,10 +31,18 @@
                         </TextBox.Effect>
                     </TextBox>
                     <Separator Height ="25" Visibility="Hidden"></Separator>
+                    <TextBlock Text="Screen Name:" HorizontalAlignment="Center"></TextBlock>
+                    <TextBox x:Name="ScreenNameSU_Textbox" Width="350" Height=" 50" 
+                             VerticalAlignment="Center">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <Separator Height ="25" Visibility="Hidden"></Separator>
                     <Button x:Name="SignUp_Button" Width=" 350" Height="50" Content="GO!" Click="GOButton_Click"/>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="SignIn_Grid">
+            <Grid x:Name="SignIn_Grid" Background="#FF8F2020">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
                     <TextBlock HorizontalAlignment="Center" 
                                Text="Please enter your sign in details!"></TextBlock>

@@ -18,7 +18,7 @@ import server.Connectivity.*;
  * @author conno
  */
 public class Game implements ICommandHandler<GameCommand> {
-    
+
     private List<Board> boards;
     private List<String> ids;
     private HashMap<String, Player> players;
@@ -28,14 +28,14 @@ public class Game implements ICommandHandler<GameCommand> {
     private final int BOARD_SIZE;
     private ICommandHandler<ModelCommand> ch;
     private boolean full = false;
-    
+
     public final String ID;
-    
+
     public Game(int BOARD_SIZE) {
         this.BOARD_SIZE = BOARD_SIZE;
         this.ID = Identification.ID.GenerateID_Number(6);
     }
-    
+
     public void Init() {
         boards = new ArrayList<>(); // initializes list of board
         PlayerToSocket = new HashMap<>();
@@ -45,7 +45,7 @@ public class Game implements ICommandHandler<GameCommand> {
             boards.add(new Board(BOARD_SIZE, i + 1)); // creates a board for each of the players at a given size
         }
     }
-    
+
     public void ShutdownGame() {
         Identification.ID.RemoveID(ID);
         players.clear();
@@ -53,24 +53,24 @@ public class Game implements ICommandHandler<GameCommand> {
         ids.clear();
         // shutdown socket handlers
     }
-    
+
     @Override
     public void Handle(GameCommand command) {
         if (command.execute(this) != ResultCode.Failure) {
             // log command
         }
     }
-    
+
     public void SetCommandHandler(ICommandHandler ch) {
         this.ch = ch;
     }
-    
+
     public ICommandHandler GetCommandHandler() {
         return ch;
     }
-    
+
     public void PlayerJoin(String ID, SocketHandler sh) {
-        
+
         Player player = new Player(ID);
         PlayerToSocket.put(player, sh);
         ids.add(ID);
@@ -81,7 +81,7 @@ public class Game implements ICommandHandler<GameCommand> {
         }
         SendGameID(player);
     }
-    
+
     public void PlayerLeave(String ID) {
         PlayerToSocket.remove(players.get(ID));
         players.remove(ID);
@@ -90,7 +90,7 @@ public class Game implements ICommandHandler<GameCommand> {
             full = false;
         }
     }
-    
+
     @Override
     public String toString() {
         String str = "";
@@ -102,11 +102,11 @@ public class Game implements ICommandHandler<GameCommand> {
         }
         return str;
     }
-    
+
     public boolean GotSpace() {
         return !full;
     }
-    
+
     private void SendGameID(Player player) {
         ConnectivityCommandHandlerInstance.GetInstance().Handle(new SendGameIDCommand(PlayerToSocket.get(player), ID));
     }

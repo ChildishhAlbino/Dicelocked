@@ -31,7 +31,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
 
     @Override
     public void Start() {
-        DB.GetDB().Handle(new DBCommand.HashPasswordCommand("lol"));
+        DB.SetCommandHandler(this);
         ConnectivityCommandHandlerInstance.GetInstance().Handle(new StartupCommand(this));
     }
 

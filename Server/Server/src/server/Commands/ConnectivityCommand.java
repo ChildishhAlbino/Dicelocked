@@ -6,8 +6,10 @@
 package server.Commands;
 
 import server.Commands.ControllerCommand.PassToModelCommand;
+import server.Commands.DBCommand.*;
 import server.Connectivity.*;
-import server.Model.Player;
+import server.Connectivity.Connectivity.LoginType;
+import server.DB.DB;
 
 /**
  *
@@ -98,9 +100,6 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
         @Override
         public ResultCode execute(Connectivity commandHandler) {
             switch (it) {
-                case name:
-                    sh.Send("afi-n");// unecessary - use SendMessageCommand
-                    break;
                 case move:
                     sh.Send("afi-m");
                     break;
@@ -123,9 +122,36 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            String s = "sgi-"+ID;
+            String s = "sgi-" + ID;
             System.out.println(s);
             sh.Send(s);
+            return ResultCode.Success;
+        }
+    }
+
+    public static class ParseLogonAttempt extends ConnectivityCommand {
+
+        private final SocketHandler sh;
+        private final String logonCode;
+
+        public ParseLogonAttempt(SocketHandler sh, String logonCode) {
+            this.logonCode = logonCode;
+            this.sh = sh;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            System.out.println("LogonAttemptParse");
+            LoginType l = commandHandler.ParseLogonCode(logonCode);
+
+            if (l == LoginType.sign_in) {
+                DB.GetDB().Handle(new SignInCommand(sh, logonCode));
+            } else if (l == LoginType.sign_up) {
+                DB.GetDB().Handle(new SignUpCommand(sh, logonCode));
+            } else {
+                System.out.println("Error: Login type wrong");
+                return ResultCode.Failure;
+            }
             return ResultCode.Success;
         }
     }

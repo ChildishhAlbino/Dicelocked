@@ -8,9 +8,7 @@ package server.Connectivity;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import server.Commands.*;
 import server.Commands.ControllerCommand.*;
 import server.Commands.ICommand;
@@ -23,6 +21,12 @@ import server.IComponent;
  */
 public class Connectivity extends Thread implements ICommandHandler<ConnectivityCommand>, IComponent {
 
+    public enum LoginType {
+        error,
+        sign_up,
+        sign_in,
+
+    }
     private boolean listening = true; // bool to control while loop
     //private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
 
@@ -90,4 +94,16 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         return sh;
     }
 
+    public LoginType ParseLogonCode(String logonCode) {
+        LoginType l = LoginType.error;
+        switch (logonCode.substring(0, 4)) {
+            case "sii-":
+                System.out.println("SignIn!");
+                return LoginType.sign_in;
+            case "sui-":
+                System.out.println("SignUp");
+                return LoginType.sign_up;
+        }
+        return l;
+    }
 }

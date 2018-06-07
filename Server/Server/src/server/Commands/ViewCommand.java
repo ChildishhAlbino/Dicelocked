@@ -34,16 +34,14 @@ public abstract class ViewCommand implements ICommand<View> {
     public static class PrintGamesListCommand extends ViewCommand {
 
         private final List<Game> games;
-        private final game_type gt;
 
-        public PrintGamesListCommand(List<Game> games, game_type gt) {
+        public PrintGamesListCommand(List<Game> games) {
             this.games = games;
-            this.gt = gt;
         }
 
         @Override
         public ResultCode execute(View commandHandler) {
-            commandHandler.PrintGamesList(games, gt);
+            commandHandler.PrintGamesList(games);
             return ResultCode.Success;
         }
 
