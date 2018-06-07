@@ -8,10 +8,12 @@ package server.DB;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import server.Commands.ConnectivityCommand;
 import server.Commands.ControllerCommand;
 import server.Commands.DBCommand;
 import server.Commands.ICommand.ResultCode;
 import server.Commands.ICommandHandler;
+import server.Connectivity.Connectivity;
 
 /**
  *
@@ -93,8 +95,7 @@ public class DB implements ICommandHandler<DBCommand> {
                 while (rs.next()) {
                     String dbHash = rs.getString("PasswordHash");
                     System.out.println(dbHash);
-                    if (dbHash.equals(hash)) {
-                        System.out.println("Player ID: " + rs.getInt(5));
+                    if (dbHash.equals(hash)) {                      
                         return true;
                     } else {
                         rs.next();

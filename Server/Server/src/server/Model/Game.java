@@ -108,6 +108,6 @@ public class Game implements ICommandHandler<GameCommand> {
     }
 
     private void SendGameID(Player player) {
-        ConnectivityCommandHandlerInstance.GetInstance().Handle(new SendGameIDCommand(PlayerToSocket.get(player), ID));
+        Connectivity.GetInstance().Handle(new SendGameIDCommand(PlayerToSocket.get(player), ID));
     }
 }

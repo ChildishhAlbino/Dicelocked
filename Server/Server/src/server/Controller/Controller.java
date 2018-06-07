@@ -32,7 +32,7 @@ public class Controller implements ICommandHandler<ControllerCommand>, IComponen
     @Override
     public void Start() {
         DB.SetCommandHandler(this);
-        ConnectivityCommandHandlerInstance.GetInstance().Handle(new StartupCommand(this));
+        Connectivity.GetInstance().Handle(new StartupCommand(this));
     }
 
     @Override

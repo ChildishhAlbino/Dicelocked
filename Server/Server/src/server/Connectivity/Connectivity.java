@@ -29,7 +29,8 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
     }
     private boolean listening = true; // bool to control while loop
     //private List<SocketHandler> socketHandlers; //list of all sockethandlers in use - needs refinement
-
+    
+    private static ICommandHandler<ConnectivityCommand> instance;
     private HashMap<Integer, SocketHandler> socketHandlers;
     private final int PORT_NUMBER = 11000;
     private ICommandHandler<ControllerCommand> ch;
@@ -38,7 +39,14 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         super("ConnectivityManager");
         socketHandlers = new HashMap<>();
     }
-
+    
+    public static ICommandHandler<ConnectivityCommand> GetInstance() {
+        if (instance == null) {
+            instance = new Connectivity();
+        }
+        return instance;
+    }
+    
     @Override
     public void run() {
         System.out.println("Starting Server!");

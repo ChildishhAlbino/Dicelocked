@@ -5,7 +5,6 @@
  */
 package server.Commands;
 
-import server.Connectivity.ConnectivityCommandHandlerInstance;
 import server.Connectivity.SocketHandler;
 import server.DB.DB;
 
