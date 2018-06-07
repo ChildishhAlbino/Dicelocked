@@ -40,7 +40,6 @@ public class SocketHandler extends Thread {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             WaitForLogonAttempt();
-            //ch.Handle(new PassToControllerCommand(ListenForPlayerName(), this));
             while (socket.isConnected() && listening) {
                 incomming = in.readLine();
                 ch.Handle(new ProcessIncomingMessageCommand(incomming));
@@ -90,7 +89,7 @@ public class SocketHandler extends Thread {
         while (s == null) {
             s = in.readLine();
         }
-        System.out.println(s);
+        //System.out.println(s);
         ch.Handle(new ParseLogonAttempt(this, s));
     }
 }

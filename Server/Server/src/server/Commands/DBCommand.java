@@ -49,7 +49,7 @@ public abstract class DBCommand implements ICommand<DB> {
 
         @Override
         public ResultCode execute(DB commandHandler) {
-            System.out.println("SignInCommand");
+            //System.out.println("SignInCommand");
             if (commandHandler.CheckLoginInfo(ExtractUserName(logonCode),
                     ExtractPassword(logonCode))) {
                 // get player code
@@ -81,13 +81,20 @@ public abstract class DBCommand implements ICommand<DB> {
         @Override
         public ResultCode execute(DB commandHandler) {
             //Attempt to add to Players Table
-            if(commandHandler.AddPlayerToPlayersTable(ExtractScreenName(logonCode))){
+            if(commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)) == -1 && 
+                    commandHandler.CheckLoginInfo(ExtractUserName(logonCode), 
+                            ExtractPassword(logonCode))){
+                
+                commandHandler.AddPlayerToPlayersTable(ExtractScreenName(logonCode));
                 //add username, password and index of player to user_login
                 System.out.println("Added player, now adding user");
                 commandHandler.CheckSignUp(ExtractUserName(logonCode),
                     ExtractPassword(logonCode), commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)));
+                return ResultCode.Success;
             }
-            return ResultCode.Success;
+            else{
+                return ResultCode.Failure;
+            }
         }
 
         private String ExtractUserName(String lc) {

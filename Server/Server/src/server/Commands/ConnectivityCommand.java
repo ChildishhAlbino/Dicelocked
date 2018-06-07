@@ -141,7 +141,7 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            System.out.println("LogonAttemptParse");
+            //System.out.println("LogonAttemptParse");
             LoginType l = commandHandler.ParseLogonCode(logonCode);
 
             if (l == LoginType.sign_in) {

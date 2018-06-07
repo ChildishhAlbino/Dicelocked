@@ -8,12 +8,11 @@ package server.DB;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.Commands.ConnectivityCommand;
 import server.Commands.ControllerCommand;
 import server.Commands.DBCommand;
 import server.Commands.ICommand.ResultCode;
 import server.Commands.ICommandHandler;
-import server.Connectivity.Connectivity;
+import server.Model.Player;
 
 /**
  *
@@ -84,30 +83,32 @@ public class DB implements ICommandHandler<DBCommand> {
     }
 
     public boolean CheckLoginInfo(String username, String hash) {
-        System.out.println("checking information...");
+        //System.out.println("checking information...");
         if (ConnectToDB()) {
             try {
-                String sql = "SELECT * FROM User_Login WHERE Username = ?";
+                String sql = "SELECT * FROM User_Login WHERE Username = ? && PasswordHash = ?";
                 PreparedStatement ps = connect.prepareStatement(sql);
                 ps.setString(1, username);
+                ps.setString(2, hash);
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
-                while (rs.next()) {
-                    String dbHash = rs.getString("PasswordHash");
-                    System.out.println(dbHash);
-                    if (dbHash.equals(hash)) {                      
-                        return true;
-                    } else {
-                        rs.next();
-                    }
+                if(rs.next()){
+                    System.out.println("Login Successful");
+                    return true;
                 }
                 System.out.println("Wrong password!");
             } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
             }
         }
         return false;
     }
+    
+    public int SignIn(String username, String hash){
+        // returns PlayerID from username
+        return 0;
+    }  
 
     public void CheckSignUp(String username, String hash, int ID) {
         if (ConnectToDB()) {
@@ -132,7 +133,10 @@ public class DB implements ICommandHandler<DBCommand> {
                 ps.setInt(3, ID);
                 ps.execute();
             } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                if(ex.toString().contains("Duplicate entry")){
+                    System.out.println("Username already in use!");
+                    // let client know
+                }
             }
         }
     }
@@ -146,7 +150,11 @@ public class DB implements ICommandHandler<DBCommand> {
                 ps.execute();
                 return true;
             } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                if(ex.toString().contains("Duplicate entry")){
+                    System.out.println("Player Name already in use!");
+                    // let client know
+                }
             }
         }
         return false;

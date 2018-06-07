@@ -61,7 +61,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
         game.Init();
         game.PlayerJoin(ID, sh);
     }
-
+    
     public void FindGame(String ID, SocketHandler sh) {
         if (games.isEmpty()) {
             System.out.println("There were no games, starting new one!");

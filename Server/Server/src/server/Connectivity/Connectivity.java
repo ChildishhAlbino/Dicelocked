@@ -106,10 +106,10 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
         LoginType l = LoginType.error;
         switch (logonCode.substring(0, 4)) {
             case "sii-":
-                System.out.println("SignIn!");
+                //System.out.println("SignIn!");
                 return LoginType.sign_in;
             case "sui-":
-                System.out.println("SignUp");
+                //System.out.println("SignUp");
                 return LoginType.sign_up;
         }
         return l;
