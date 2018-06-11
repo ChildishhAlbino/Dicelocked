@@ -5,8 +5,8 @@
  */
 package server.Commands;
 
-import server.Connectivity.Connectivity;
-import server.Connectivity.SocketHandler;
+import server.Connectivity.*;
+import server.Commands.ConnectivityCommand.*;
 import server.DB.DB;
 import server.Model.Player;
 
@@ -63,6 +63,7 @@ public abstract class DBCommand implements ICommand<DB> {
                     Connectivity.GetInstance().Handle(
                             new ConnectivityCommand.PassToControllerCommand(
                                     new Player(i, s), sh));
+                    Connectivity.GetInstance().Handle(new SendPlayerNameCommand(sh, s));
                 } else {
                     return ResultCode.Failure;
                 }
@@ -92,26 +93,25 @@ public abstract class DBCommand implements ICommand<DB> {
         }
 
         @Override
-        public ResultCode execute(DB commandHandler) {         
-            if(commandHandler.UserExists(ExtractUserName(logonCode))){
+        public ResultCode execute(DB commandHandler) {
+            if (commandHandler.UserExists(ExtractUserName(logonCode))) {
                 System.out.println("User already detected!");
                 canProceed = false; // check if username in users db
             }
-            if(commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)) != -1){
+            if (commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)) != -1) {
                 System.out.println("Player already detected");
                 canProceed = false; // check if name in players db
             }
-            
-            if(canProceed){
+
+            if (canProceed) {
                 // if not, begin signup process
                 commandHandler.AddPlayerToPlayersTable(ExtractScreenName(logonCode));
-                commandHandler.SignUpUser(ExtractUserName(logonCode), ExtractPassword(logonCode), 
+                commandHandler.SignUpUser(ExtractUserName(logonCode), ExtractPassword(logonCode),
                         commandHandler.GetPlayerIDByName(ExtractScreenName(logonCode)));
                 return ResultCode.Success;
-            }
-            else{
+            } else {
                 return ResultCode.Failure;
-            } 
+            }
         }
 
         private String ExtractUserName(String lc) {

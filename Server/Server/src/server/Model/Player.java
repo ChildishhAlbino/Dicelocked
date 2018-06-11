@@ -39,8 +39,8 @@ public class Player {
     public void LeaveGame() {
         //ch.Handle(new LeaveGameCommand(ID));
     }
-    
-    public int GetID(){
+
+    public int GetID() {
         return ID;
     }
 }

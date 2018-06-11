@@ -98,7 +98,7 @@ public class Game implements ICommandHandler<GameCommand> {
 //            Player player = players.get(ids.get(i));
 //            str += player.toString();
 //        }
-        for (Player p : players.values()){
+        for (Player p : players.values()) {
             str += p.toString();
         }
         return str;

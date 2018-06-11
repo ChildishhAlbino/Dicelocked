@@ -124,7 +124,26 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
         @Override
         public ResultCode execute(Connectivity commandHandler) {
             String s = "sgi-" + ID;
-            System.out.println(s);
+            //System.out.println(s);
+            sh.Send(s);
+            return ResultCode.Success;
+        }
+    }
+
+    public static class SendPlayerNameCommand extends ConnectivityCommand {
+
+        private final SocketHandler sh;
+        private final String Name;
+
+        public SendPlayerNameCommand(SocketHandler sh, String ID) {
+            this.sh = sh;
+            this.Name = ID;
+        }
+
+        @Override
+        public ResultCode execute(Connectivity commandHandler) {
+            String s = "spn-" + Name;
+            //System.out.println(s);
             sh.Send(s);
             return ResultCode.Success;
         }
@@ -145,13 +164,21 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
             //System.out.println("LogonAttemptParse");
             LoginType l = commandHandler.ParseLogonCode(logonCode);
 
-            if (l == LoginType.sign_in) {
-                DB.GetDB().Handle(new SignInCommand(sh, logonCode));
-            } else if (l == LoginType.sign_up) {
-                DB.GetDB().Handle(new SignUpCommand(sh, logonCode));
-            } else {
+            if (null == l) {
                 System.out.println("Error: Login type wrong");
                 return ResultCode.Failure;
+            } else {
+                switch (l) {
+                    case sign_in:
+                        DB.GetDB().Handle(new SignInCommand(sh, logonCode));
+                        break;
+                    case sign_up:
+                        DB.GetDB().Handle(new SignUpCommand(sh, logonCode));
+                        break;
+                    default:
+                        System.out.println("Error: Login type wrong");
+                        return ResultCode.Failure;
+                }
             }
             return ResultCode.Success;
         }
