@@ -12,8 +12,8 @@ namespace Dicelocked.ServerClientConncetivity
     {
         private ICommandHandler<ViewCommand> commandHandler;
         public ClientConnectivity connection;
-        private string ID = null;
-        private string PlayerName = null;
+        private string id = null;
+        private string playerName = null;
 
         public ICommandHandler<ViewCommand> CommandHandler
         {
@@ -26,6 +26,16 @@ namespace Dicelocked.ServerClientConncetivity
             {
                 commandHandler = value;
             }
+        }
+
+        public string PlayerName
+        {
+            get => playerName;
+        }
+
+        public string ID
+        {
+            get => id;
         }
 
         public void handle(ControllerCommand command)
@@ -53,10 +63,10 @@ namespace Dicelocked.ServerClientConncetivity
 
         public void SetID(string ID)
         {
-            if(this.ID == null)
+            if (this.id == null)
             {
-                this.ID = ID;
-                CommandHandler.handle(new UpdateViewCommand(new BeginWaitingCommand(ID)));
+                this.id = ID;
+                CommandHandler.handle(new UpdateViewCommand(new BeginWaitingCommand(id)));
             }
             else
             {
@@ -67,14 +77,15 @@ namespace Dicelocked.ServerClientConncetivity
 
         public void ClearID()
         {
-            ID = null;   
+            id = null;
+            playerName = null;
         }
 
         public void SetPlayerName(string name)
         {
-            if (this.PlayerName == null)
+            if (this.playerName == null)
             {
-                this.PlayerName = name;
+                this.playerName = name;
             }
             else
             {

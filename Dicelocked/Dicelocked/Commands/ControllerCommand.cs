@@ -62,7 +62,7 @@ namespace Dicelocked.Commands
                     string y;
                     y = received.Substring(received.IndexOf("-") + 1);
                     Console.WriteLine(y);
-                    commandHandler.handle(new SetPlayerNameCommand(y));
+                    commandHandler.handle(new SetPlayerNameCommand(y.Substring(0, y.IndexOf("?"))));
                     break;
             }
             return Result.success;
@@ -103,7 +103,7 @@ namespace Dicelocked.Commands
 
         public override Result execution(Controller commandHandler)
         {
-
+            commandHandler.SetPlayerName(ID);
             return Result.success;
         }
     }
@@ -126,7 +126,7 @@ namespace Dicelocked.Commands
     {
         public override Result execution(Controller commandHandler)
         {
-            commandHandler.Send("lgc-");
+            commandHandler.Send($"lgc-{commandHandler.ID}--{commandHandler.PlayerName}");
             commandHandler.ClearID();
             return Result.success;
         }

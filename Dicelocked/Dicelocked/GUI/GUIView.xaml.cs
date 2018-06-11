@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Timers;
 using System.Security.Cryptography;
+using System.Windows.Threading;
 
 namespace Dicelocked
 {
@@ -30,6 +31,8 @@ namespace Dicelocked
             Sign_Up,
             Sign_In,
         }
+
+        private DispatcherTimer dt;
         private List<ViewCommand> commandBacklog;
         public GUIView()
         {
@@ -37,6 +40,7 @@ namespace Dicelocked
             controller.CommandHandler = this;
             this.CommandHandler = controller;
             commandBacklog = new List<ViewCommand>();
+            SetUpTimer();
             InitializeComponent();
         }
 
@@ -65,6 +69,20 @@ namespace Dicelocked
             }
         }
 
+        public void SetUpTimer()
+        {
+            dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromMilliseconds(1 / 30);
+            dt.Tick += timer_Tick;
+            dt.Start();
+        }
+        
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            ClearBacklog();
+            InvalidateVisual();
+        }
+
         public void UpdateButtonContent(Button button, string content)
         {
             button.Content = content;
@@ -91,19 +109,6 @@ namespace Dicelocked
                     commandBacklog.Remove(vc);
                 }
             }
-        }
-
-        protected override void OnMouseEnter(MouseEventArgs e)
-        {
-            base.OnMouseEnter(e);
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            //Console.WriteLine(e.GetPosition(this).X.ToString());
-            ClearBacklog();
-            InvalidateVisual();
-            base.OnMouseMove(e);
         }
 
         public void AddToBacklog(ViewCommand vc)
