@@ -127,6 +127,7 @@ namespace Dicelocked.Commands
         public override Result execution(Controller commandHandler)
         {
             commandHandler.Send($"lgc-{commandHandler.ID}--{commandHandler.PlayerName}");
+            commandHandler.DisconnectFromServer();
             commandHandler.ClearID();
             return Result.success;
         }

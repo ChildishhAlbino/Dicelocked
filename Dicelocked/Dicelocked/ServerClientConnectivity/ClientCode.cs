@@ -30,6 +30,7 @@ namespace Dicelocked.ServerClientConncetivity
     {
         // The port number for the remote device.  
         private const int port = 11000;
+        private bool connected = true;
         private String response = String.Empty;
         private ICommandHandler<ControllerCommand> ch;
         public ICommandHandler<ControllerCommand> CommandHandler
@@ -128,8 +129,12 @@ namespace Dicelocked.ServerClientConncetivity
                     }
                     // look for more data    
                 }
-                client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                        new AsyncCallback(ReceiveCallback), state);
+                if (connected)
+                {
+                    client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                                           new AsyncCallback(ReceiveCallback), state);
+                }
+
             }
             catch (Exception e)
             {
@@ -142,9 +147,16 @@ namespace Dicelocked.ServerClientConncetivity
             // Convert the string data to byte data using ASCII encoding.  
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.  
-            connection.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), connection);
+            // Begin sending the data to the remote device. 
+            try
+            {
+                connection.BeginSend(byteData, 0, byteData.Length, 0,
+                           new AsyncCallback(SendCallback), connection);
+            }
+            catch (SocketException)
+            {
+                Console.WriteLine("Socket was closed");
+            }
         }
 
         private void SendCallback(IAsyncResult ar)
@@ -158,13 +170,25 @@ namespace Dicelocked.ServerClientConncetivity
                 int bytesSent = client.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
-                // Signal that all bytes have been sent.  
-                //sendDone.Set();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        public void Disconnect()
+        {
+            Console.WriteLine("Beginning disconnection");
+            connected = false;
+            connection.BeginDisconnect(false, new AsyncCallback(DisconnectCallBack), connection);
+        }
+
+        private void DisconnectCallBack(IAsyncResult ar)
+        {
+            Socket client = (Socket)ar.AsyncState;
+
+            client.EndDisconnect(ar);
         }
     }
 }

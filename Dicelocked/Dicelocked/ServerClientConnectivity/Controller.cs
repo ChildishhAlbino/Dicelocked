@@ -93,5 +93,11 @@ namespace Dicelocked.ServerClientConncetivity
                 Console.WriteLine("PlayerName already set, thanks!");
             }
         }
+        public void DisconnectFromServer()
+        {
+            //StartConnecting();
+            connection.Disconnect();
+            connection = null;
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace Dicelocked
             dt.Tick += timer_Tick;
             dt.Start();
         }
-        
+
         private void timer_Tick(object sender, EventArgs e)
         {
             ClearBacklog();
@@ -91,6 +91,7 @@ namespace Dicelocked
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             // do something 
+            CommandHandler.handle(new LeaveGameCommand());
             base.OnClosing(e);
         }
 
@@ -225,7 +226,7 @@ namespace Dicelocked
                 userPlusHash = SignInGoButtonPressed();
                 l = LoginType.Sign_In;
             }
-            if(userPlusHash != null)
+            if (userPlusHash != null)
             {
                 Console.WriteLine(userPlusHash);
                 CommandHandler.handle(new ConnectToServerCommand());
@@ -236,13 +237,20 @@ namespace Dicelocked
         private void LeaveGameButton_Click(object sender, RoutedEventArgs e)
         {
             CommandHandler.handle(new LeaveGameCommand());
+            OpenPreGamePanel();
         }
 
-        public void OpenWaitingPanel(string ID)
+        public void OpenWaitingPanel(string id)
         {
             PreGame_Panel.Visibility = Visibility.Collapsed;
-            GAMEID_Text.Text += ID;
+            GAMEID_Text.Text = $"GAME ID: {id}";
             Waiting_Panel.Visibility = Visibility.Visible;
+        }
+
+        public void OpenPreGamePanel()
+        {
+            PreGame_Panel.Visibility = Visibility.Visible;
+            Waiting_Panel.Visibility = Visibility.Collapsed;
         }
     }
 }
