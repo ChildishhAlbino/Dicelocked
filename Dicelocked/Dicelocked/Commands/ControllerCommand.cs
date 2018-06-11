@@ -58,7 +58,12 @@ namespace Dicelocked.Commands
                     Console.WriteLine(s);
                     commandHandler.handle(new SetGameIDCommand(s));
                     break;
-
+                case "spn-":
+                    string y;
+                    y = received.Substring(received.IndexOf("-") + 1);
+                    Console.WriteLine(y);
+                    commandHandler.handle(new SetPlayerNameCommand(y));
+                    break;
             }
             return Result.success;
         }
@@ -83,6 +88,22 @@ namespace Dicelocked.Commands
         public override Result execution(Controller commandHandler)
         {
             commandHandler.SetID(ID);
+            return Result.success;
+        }
+    }
+
+    public class SetPlayerNameCommand : ControllerCommand
+    {
+        string ID;
+
+        public SetPlayerNameCommand(string ID)
+        {
+            this.ID = ID;
+        }
+
+        public override Result execution(Controller commandHandler)
+        {
+
             return Result.success;
         }
     }

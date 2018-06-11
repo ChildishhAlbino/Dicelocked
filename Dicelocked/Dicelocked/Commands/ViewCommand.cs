@@ -57,4 +57,19 @@ namespace Dicelocked.Commands
             return Result.success;
         }
     }
+
+    public class BeginWaitingCommand : ViewCommand
+    {
+        string ID;
+        public BeginWaitingCommand(string ID)
+        {
+            this.ID = ID;
+        }
+
+        public override Result execution(GUIView commandHandler)
+        {
+            commandHandler.OpenWaitingPanel(ID);
+            return Result.success;
+        }
+    }
 }

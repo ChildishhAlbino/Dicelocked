@@ -227,5 +227,17 @@ namespace Dicelocked
                 CommandHandler.handle(new SendLogonInfoCommand(userPlusHash, l));
             }
         }
+
+        private void LeaveGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommandHandler.handle(new LeaveGameCommand());
+        }
+
+        public void OpenWaitingPanel(string ID)
+        {
+            PreGame_Panel.Visibility = Visibility.Collapsed;
+            GAMEID_Text.Text += ID;
+            Waiting_Panel.Visibility = Visibility.Visible;
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Dicelocked.ServerClientConncetivity
         private ICommandHandler<ViewCommand> commandHandler;
         public ClientConnectivity connection;
         private string ID = null;
+        private string PlayerName = null;
 
         public ICommandHandler<ViewCommand> CommandHandler
         {
@@ -55,6 +56,7 @@ namespace Dicelocked.ServerClientConncetivity
             if(this.ID == null)
             {
                 this.ID = ID;
+                CommandHandler.handle(new UpdateViewCommand(new BeginWaitingCommand(ID)));
             }
             else
             {
@@ -65,7 +67,20 @@ namespace Dicelocked.ServerClientConncetivity
 
         public void ClearID()
         {
-            ID = null;
+            ID = null;   
+        }
+
+        public void SetPlayerName(string name)
+        {
+            if (this.PlayerName == null)
+            {
+                this.PlayerName = name;
+            }
+            else
+            {
+                Console.WriteLine(name);
+                Console.WriteLine("PlayerName already set, thanks!");
+            }
         }
     }
 }

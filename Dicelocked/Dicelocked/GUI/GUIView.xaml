@@ -8,7 +8,7 @@
         Title="GUIView" Height="720" Width="1280">
     <Grid x:Name="MainGrid" Background="#FFB6B6B6" TextElement.FontFamily="Arial" 
           TextElement.FontSize="30" TextElement.FontWeight ="Bold">
-        <StackPanel x:Name="PreGame_Grid" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel x:Name="PreGame_Panel" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid x:Name="SignUp_Grid" Background="#FF3A479B" Visibility="Collapsed" >
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" >
                     <TextBlock Text="Please enter your details to sign up!" 
@@ -67,6 +67,12 @@
             <Separator Height="50" Visibility="Hidden"></Separator>
             <Button x:Name="ToggleButton" Content="Sign-Up instead" HorizontalAlignment="Center" 
                     VerticalAlignment="Top" Width="250" Height="40" Click="ToggleButton_Click"/>
+        </StackPanel>
+        <StackPanel x:Name="Waiting_Panel" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <TextBlock x:Name="GAMEID_Text" Text="GAME ID: " HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Text="Waiting for another player!" HorizontalAlignment="Center"></TextBlock>
+            <Separator Visibility="Hidden" Height="5"></Separator>
+            <Button x:Name="LeaveGameButton" Content="Leave Game" Width="350" Height="50" Click="LeaveGameButton_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>
