@@ -5,6 +5,7 @@
  */
 package server.Commands;
 
+import server.Commands.GameCommand.*;
 import server.Commands.ModelCommand.*;
 import server.Connectivity.SocketHandler;
 import server.Controller.Controller;
@@ -35,8 +36,27 @@ public abstract class ControllerCommand implements ICommand<Controller> {
 
         @Override
         public ResultCode execute(Controller commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new ParseInputCommand(incoming));
+            
+            switch(incoming.substring(0, 4)){
+                case "lgc-":
+                    GameCommand g = new LeaveGameCommand(ExtractPlayerName(incoming));
+                    commandHandler.GetCommandHandler().Handle(new PassGameCommandToGame(
+                            g, ExtractGameID(incoming)));
+                    break;
+                default:
+                    System.out.println("Dunno how to process this command code mate!");
+                    break;
+            }
+            
             return ResultCode.Success;
+        }
+        
+        private String ExtractGameID(String s){
+            return s.substring(s.indexOf("-") + 1, s.indexOf("--"));
+        }
+        
+        private String ExtractPlayerName(String s){
+            return s.substring(s.indexOf("--") + 2);
         }
     }
 

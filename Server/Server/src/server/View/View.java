@@ -43,7 +43,7 @@ public class View implements ICommandHandler<ViewCommand>, IComponent {
         while (true) {
             ch.Handle(new AskModeForGamesListCommand());
             try {
-                Thread.sleep(4000);
+                Thread.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
             }

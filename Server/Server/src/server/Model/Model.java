@@ -56,7 +56,7 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
     }
 
     public void NewGame(Player p, SocketHandler sh) {
-        Game game = new Game(BOARD_SIZE);
+        Game game = new Game(BOARD_SIZE, this);
         games.add(game);
         game.Init();
         game.PlayerJoin(p, sh);
@@ -81,6 +81,27 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
         }
         SortGamesListByWaiting();
     }
+    
+    public void PassGameCommandToGame(String ID, GameCommand gc){
+        Game g = GetGameByID(ID);
+        System.out.println(ID);
+        if(g != null){
+            g.Handle(gc);
+        }
+        else{
+            System.out.println("Couldn't find Game by ID");
+        }
+    }
+    
+    private Game GetGameByID(String ID){
+        Game g = null;
+        for(Game game : games){
+            if(game.ID.equals(ID)){
+                g = game;
+            }
+        }
+        return g;
+    }
 
     public void SortGamesListByWaiting() {
         games.sort((Game o1, Game o2) -> {
@@ -92,5 +113,9 @@ public class Model implements ICommandHandler<ModelCommand>, IComponent {
                 return 0;
             }
         });
+    }
+    
+    public void RemoveGame(Game g){
+        games.remove(g);
     }
 }

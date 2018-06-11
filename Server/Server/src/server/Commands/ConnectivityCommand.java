@@ -130,19 +130,19 @@ public abstract class ConnectivityCommand implements ICommand<Connectivity> {
         }
     }
 
-    public static class SendPlayerNameCommand extends ConnectivityCommand {
+    public static class SendPlayerDetailsCommand extends ConnectivityCommand {
 
         private final SocketHandler sh;
-        private final String Name;
+        private final String name;
 
-        public SendPlayerNameCommand(SocketHandler sh, String ID) {
+        public SendPlayerDetailsCommand(SocketHandler sh, String name) {
             this.sh = sh;
-            this.Name = ID;
+            this.name = name;
         }
 
         @Override
         public ResultCode execute(Connectivity commandHandler) {
-            String s = "spn-" + Name;
+            String s = "spn-" + name;
             //System.out.println(s);
             sh.Send(s);
             return ResultCode.Success;

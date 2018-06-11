@@ -63,7 +63,7 @@ public abstract class DBCommand implements ICommand<DB> {
                     Connectivity.GetInstance().Handle(
                             new ConnectivityCommand.PassToControllerCommand(
                                     new Player(i, s), sh));
-                    Connectivity.GetInstance().Handle(new SendPlayerNameCommand(sh, s));
+                    Connectivity.GetInstance().Handle(new SendPlayerDetailsCommand(sh, s));
                 } else {
                     return ResultCode.Failure;
                 }

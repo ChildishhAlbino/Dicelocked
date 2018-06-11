@@ -7,6 +7,7 @@ package server.Commands;
 
 import server.Commands.ViewCommand.*;
 import server.Connectivity.SocketHandler;
+import server.Model.Game;
 import server.Model.Model;
 import server.Model.Player;
 
@@ -15,61 +16,93 @@ import server.Model.Player;
  * @author conno
  */
 public abstract class ModelCommand implements ICommand<Model> {
-
+    
     public static class TestModelCommand extends ModelCommand {
-
+        
         @Override
         public ResultCode execute(Model commandHandler) {
             return ResultCode.Failure;
         }
     }
-
+    
     public static class ParseInputCommand extends ModelCommand {
-
+        
         public String input;
-
+        
         public ParseInputCommand(String input) {
             this.input = input;
         }
-
+        
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.GetCommandHandler().Handle(new PrintToViewCommand(input));
             return ResultCode.Success;
         }
     }
-
+    
     public static class FindGameCommand extends ModelCommand {
-
+        
         private final Player p;
         private final SocketHandler sh;
-
+        
         public FindGameCommand(Player ID, SocketHandler sh) {
             this.p = ID;
             this.sh = sh;
         }
-
+        
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.FindGame(p, sh);
             return ResultCode.Success;
         }
     }
-
+    
     public static class StartModelCommand extends ModelCommand {
-
+        
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.Start();
             return ResultCode.Success;
         }
     }
-
+    
     public static class PassGamesListToViewCommand extends ModelCommand {
-
+        
         @Override
         public ResultCode execute(Model commandHandler) {
             commandHandler.ch.Handle(new PrintGamesListCommand(commandHandler.games));
+            return ResultCode.Success;
+        }
+    }
+    
+    public static class PassGameCommandToGame extends ModelCommand {
+        
+        private final GameCommand gc;
+        private final String gameID;
+        
+        public PassGameCommandToGame(GameCommand gc, String gameID) {
+            this.gc = gc;
+            this.gameID = gameID;
+        }
+        
+        @Override
+        public ResultCode execute(Model commandHandler) {
+            commandHandler.PassGameCommandToGame(gameID, gc);
+            return ResultCode.Success;
+        }
+    }
+    
+    public static class RemoveGameCommand extends ModelCommand {
+
+        private final Game g;
+        
+        public RemoveGameCommand(Game g) {
+            this.g = g;
+        }
+        
+        @Override
+        public ResultCode execute(Model commandHandler) {
+            commandHandler.RemoveGame(g);
             return ResultCode.Success;
         }
     }

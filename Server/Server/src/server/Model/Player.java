@@ -43,4 +43,8 @@ public class Player {
     public int GetID() {
         return ID;
     }
+    
+    public String GetName(){
+        return name;
+    }
 }

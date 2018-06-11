@@ -11,6 +11,7 @@ import java.util.List;
 import server.Commands.*;
 import server.Commands.ConnectivityCommand.*;
 import server.Commands.ICommand.ResultCode;
+import server.Commands.ModelCommand.*;
 import server.Connectivity.*;
 
 /**
@@ -20,9 +21,8 @@ import server.Connectivity.*;
 public class Game implements ICommandHandler<GameCommand> {
 
     private List<Board> boards;
-    private List<String> ids;
     private HashMap<Integer, Player> players;
-    private HashMap<Player, SocketHandler> PlayerToSocket;
+    private HashMap<Player, SocketHandler> playerToSocket;
     private final int MAX_PLAYERS = 2;
     private final int BOARD_SIZE;
     private ICommandHandler<ModelCommand> ch;
@@ -30,15 +30,15 @@ public class Game implements ICommandHandler<GameCommand> {
 
     public final String ID;
 
-    public Game(int BOARD_SIZE) {
+    public Game(int BOARD_SIZE, ICommandHandler<ModelCommand> ch) {
         this.BOARD_SIZE = BOARD_SIZE;
         this.ID = Identification.ID.GenerateID_Number(6);
+        this.ch = ch;
     }
 
     public void Init() {
         boards = new ArrayList<>(); // initializes list of board
-        PlayerToSocket = new HashMap<>();
-        ids = new ArrayList<>();
+        playerToSocket = new HashMap<>();
         players = new HashMap<>();
         for (int i = 0; i < MAX_PLAYERS; i++) {
             boards.add(new Board(BOARD_SIZE, i + 1)); // creates a board for each of the players at a given size
@@ -47,10 +47,9 @@ public class Game implements ICommandHandler<GameCommand> {
 
     public void ShutdownGame() {
         Identification.ID.RemoveID(ID);
+        ch.Handle(new RemoveGameCommand(this));
+        playerToSocket.clear();
         players.clear();
-        PlayerToSocket.clear();
-        ids.clear();
-        // shutdown socket handlers
     }
 
     @Override
@@ -70,8 +69,7 @@ public class Game implements ICommandHandler<GameCommand> {
 
     public void PlayerJoin(Player p, SocketHandler sh) {
 
-        PlayerToSocket.put(p, sh);
-        //ids.add(ID);
+        playerToSocket.put(p, sh);
         players.put(p.GetID(), p);
         p.SetCommandHandler(this);
         if (players.size() == MAX_PLAYERS) {
@@ -80,13 +78,29 @@ public class Game implements ICommandHandler<GameCommand> {
         SendGameID(p);
     }
 
-    public void PlayerLeave(String ID) {
-        PlayerToSocket.remove(players.get(ID));
-        players.remove(ID);
-        ids.remove(ID);
-        if (players.size() < MAX_PLAYERS) {
+    public void PlayerLeave(String name) {
+        Player p = GetPlayerByName(name);
+        playerToSocket.get(p).Shutdown();
+        playerToSocket.remove(p);
+        players.remove(p.GetID());
+        if (players.isEmpty()) {
+            ShutdownGame();
+        }
+        else if (players.size() < MAX_PLAYERS) {
+            // ask the other player if they'd like to requeue for another game
+            // reset the game and make it waiting
             full = false;
         }
+    }
+    
+    public Player GetPlayerByName(String name){
+        Player p = null;
+        for(Player player : players.values()){
+            if(player.GetName().equals(name)){
+                p = player;
+            }
+        }
+        return p;
     }
 
     @Override
@@ -109,6 +123,6 @@ public class Game implements ICommandHandler<GameCommand> {
     }
 
     private void SendGameID(Player player) {
-        Connectivity.GetInstance().Handle(new SendGameIDCommand(PlayerToSocket.get(player), ID));
+        Connectivity.GetInstance().Handle(new SendGameIDCommand(playerToSocket.get(player), ID));
     }
 }
