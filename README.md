@@ -1,11 +1,11 @@
 # Dicelocked
-The client for a game I am developing for a TAFE assessment.
+A game that combines elements of Yu-Gi-Oh!, Chess, and Rock-Paper-Scissors.
 
 The game contains two 3x3 grids where each player can places pieces that fall into one of three classes; Rogues, Warriors, and Mages.
 
 The game uses RPS mechanics where Rogues beat Mages who beat Warriors who beat Rogues.
 
-Each classes contains 3 types which change the playstyle:
+Each class contains 3 sub-classes which changes the playstyle in some way:
 
 Rogues:
 
@@ -20,7 +20,7 @@ Rogues:
   
 Warriors:
 
-  Swordsmen - generic "knight" character, can attack any space on the opposing field but they must be in the front row of the field
+Swordsmen - generic "knight" character, can attack any space on the opposing field but they must be in the front row of the field
   they are on (and they cannot attack backwards) to compensate, they can defend any piece that is standing behind them.
   
   Shieldbearers - almost the opposite of the knight, they can only attack units in the opposing field's front row but can defend any piece
@@ -45,5 +45,5 @@ The die have a major class, minor class, and a counter class.
   The minor class is the class that is weak to the major. There are 2 minor sides on a die.
   The counter class is the remaining class not already on the die. There is only 1 counter side on the die.
   
-"Dice decks" will allow a player to specialise what class they want to, and to what extent, specialise for  
+"Dice decks" will allow a player to specialise what class they want to, and to what extent, specialise for.  
   
