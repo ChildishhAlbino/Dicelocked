@@ -57,7 +57,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                 Socket clientSocket = socket.accept();
                 if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(clientSocket, com.albinogames.server.identification.IDGenerator.GenerateID_Int(2));
+                    sh = new SocketHandler(clientSocket, com.albinogames.server.Identification.IDGenerator.GenerateID_Int(2));
                     sh.SetCommandHandler(this);
                     socketHandlers.put(sh.GetID(), sh);
                     sh.start();

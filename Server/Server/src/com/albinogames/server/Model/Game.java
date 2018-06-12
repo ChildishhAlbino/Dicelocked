@@ -35,7 +35,7 @@ public class Game implements ICommandHandler<GameCommand> {
 
     public Game(int BOARD_SIZE, ICommandHandler<ModelCommand> ch) {
         this.BOARD_SIZE = BOARD_SIZE;
-        this.ID = com.albinogames.server.identification.IDGenerator.GenerateID_Number(6);
+        this.ID = com.albinogames.server.Identification.IDGenerator.GenerateID_Number(6);
         this.ch = ch;
     }
 
@@ -49,7 +49,7 @@ public class Game implements ICommandHandler<GameCommand> {
     }
 
     public void ShutdownGame() {
-        com.albinogames.server.identification.IDGenerator.RemoveID(ID);
+        com.albinogames.server.Identification.IDGenerator.RemoveID(ID);
         ch.Handle(new RemoveGameCommand(this));
         playerToSocket.clear();
         players.clear();

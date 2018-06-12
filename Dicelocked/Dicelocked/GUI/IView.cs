@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dicelocked.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,7 @@ namespace Dicelocked.GUI
 {
     public interface IView
     {
-        void UpdateGUI();
-
-        void UpdateButtonContent(Button button, string content);
-
-
+        void ClearBacklog();
+        void AddToBacklog(ViewCommand vc);
     }
 }
