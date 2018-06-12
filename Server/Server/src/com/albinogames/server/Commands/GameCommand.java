@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Commands;
+package com.albinogames.server.Commands;
 
-import server.Model.Game;
+import com.albinogames.server.Model.Game;
 
 /**
  *

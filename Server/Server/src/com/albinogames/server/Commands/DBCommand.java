@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Commands;
+package com.albinogames.server.Commands;
 
-import server.Connectivity.*;
-import server.Commands.ConnectivityCommand.*;
-import server.DB.DB;
-import server.Model.Player;
+import com.albinogames.server.Connectivity.SocketHandler;
+import com.albinogames.server.Connectivity.Connectivity;
+import com.albinogames.server.Commands.ConnectivityCommand.*;
+import com.albinogames.server.DB.DB;
+import com.albinogames.server.Model.Player;
 
 /**
  *

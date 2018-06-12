@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Commands;
+package com.albinogames.server.Commands;
 
-import server.Commands.ControllerCommand.PassToModelCommand;
-import server.Commands.DBCommand.*;
-import server.Connectivity.*;
-import server.Connectivity.Connectivity.LoginType;
-import server.DB.DB;
-import server.Model.Player;
+import com.albinogames.server.Connectivity.SocketHandler;
+import com.albinogames.server.Connectivity.Connectivity;
+import com.albinogames.server.Commands.ControllerCommand.PassToModelCommand;
+import com.albinogames.server.Commands.DBCommand.*;
+import com.albinogames.server.Connectivity.Connectivity.LoginType;
+import com.albinogames.server.DB.DB;
+import com.albinogames.server.Model.Player;
 
 /**
  *

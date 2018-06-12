@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Identification;
+package com.albinogames.server.identification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author conno
  */
-public class ID {
+public class IDGenerator {
 
     private static final List<String> ids_in_use = new ArrayList<>();
 

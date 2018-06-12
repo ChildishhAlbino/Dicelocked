@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Connectivity;
+package com.albinogames.server.Connectivity;
 
+import com.albinogames.server.Commands.ICommandHandler;
+import com.albinogames.server.Commands.ConnectivityCommand;
 import java.io.*;
 import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.Commands.*;
-import server.Commands.ConnectivityCommand.*;
+import com.albinogames.server.Commands.ConnectivityCommand.*;
 
 /**
  *

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.DB;
+package com.albinogames.server.DB;
 
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.Commands.ControllerCommand;
-import server.Commands.DBCommand;
-import server.Commands.ICommand.ResultCode;
-import server.Commands.ICommandHandler;
-import server.Model.Player;
+import com.albinogames.server.Commands.ControllerCommand;
+import com.albinogames.server.Commands.DBCommand;
+import com.albinogames.server.Commands.ICommand.ResultCode;
+import com.albinogames.server.Commands.ICommandHandler;
+import com.albinogames.server.Model.Player;
 
 /**
  *

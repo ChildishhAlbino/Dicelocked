@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.View;
+package com.albinogames.server.View;
 
+import com.albinogames.server.Commands.ViewCommand;
+import com.albinogames.server.Commands.ICommandHandler;
+import com.albinogames.server.Commands.ControllerCommand;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.Commands.*;
-import server.Commands.ControllerCommand.AskModeForGamesListCommand;
-import server.Commands.ControllerCommand.StartServerCommand;
-import server.IComponent;
-import server.Model.Game;
-import server.Model.Model.*;
+import com.albinogames.server.Commands.ControllerCommand.AskModeForGamesListCommand;
+import com.albinogames.server.Commands.ControllerCommand.StartServerCommand;
+import com.albinogames.server.IComponent;
+import com.albinogames.server.Model.Game;
+import com.albinogames.server.Model.Model.*;
 
 /**
  *

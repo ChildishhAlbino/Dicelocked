@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Model;
+package com.albinogames.server.Model;
 
-import server.Commands.GameCommand;
-import server.Commands.ICommandHandler;
+import com.albinogames.server.Commands.GameCommand;
+import com.albinogames.server.Commands.ICommandHandler;
 
 /**
  *

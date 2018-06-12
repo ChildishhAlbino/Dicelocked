@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Connectivity;
+package com.albinogames.server.Connectivity;
 
+import com.albinogames.server.Commands.ConnectivityCommand;
+import com.albinogames.server.Commands.ControllerCommand;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.UnknownHostException;
 import java.util.HashMap;
-import server.Commands.*;
-import server.Commands.ControllerCommand.*;
-import server.Commands.ICommand;
-import server.Commands.ICommandHandler;
-import server.IComponent;
+import com.albinogames.server.Commands.ControllerCommand.*;
+import com.albinogames.server.Commands.ICommand;
+import com.albinogames.server.Commands.ICommandHandler;
+import com.albinogames.server.IComponent;
 
 /**
  *
@@ -56,7 +57,7 @@ public class Connectivity extends Thread implements ICommandHandler<Connectivity
                 Socket clientSocket = socket.accept();
                 if (clientSocket != null) {
                     System.out.println("Found a connection");
-                    sh = new SocketHandler(clientSocket, Identification.ID.GenerateID_Int(2));
+                    sh = new SocketHandler(clientSocket, com.albinogames.server.identification.IDGenerator.GenerateID_Int(2));
                     sh.SetCommandHandler(this);
                     socketHandlers.put(sh.GetID(), sh);
                     sh.start();

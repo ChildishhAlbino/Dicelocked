@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Commands;
+package com.albinogames.server.Commands;
 
 import java.util.List;
-import server.Model.Game;
-import server.Model.Model.*;
-import server.View.View;
+import com.albinogames.server.Model.Game;
+import com.albinogames.server.Model.Model.*;
+import com.albinogames.server.View.View;
 
 /**
  *

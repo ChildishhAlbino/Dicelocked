@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package com.albinogames.server;
 
-import server.Controller.Controller;
-import server.Model.Model;
-import server.View.View;
+import com.albinogames.server.Controller.Controller;
+import com.albinogames.server.Model.Model;
+import com.albinogames.server.View.View;
 
 public class Server {
 

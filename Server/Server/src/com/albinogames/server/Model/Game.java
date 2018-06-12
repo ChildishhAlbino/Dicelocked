@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server.Model;
+package com.albinogames.server.Model;
 
+import com.albinogames.server.Connectivity.SocketHandler;
+import com.albinogames.server.Connectivity.Connectivity;
+import com.albinogames.server.Commands.ICommandHandler;
+import com.albinogames.server.Commands.ModelCommand;
+import com.albinogames.server.Commands.GameCommand;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import server.Commands.*;
-import server.Commands.ConnectivityCommand.*;
-import server.Commands.ICommand.ResultCode;
-import server.Commands.ModelCommand.*;
-import server.Connectivity.*;
+import com.albinogames.server.Commands.ConnectivityCommand.*;
+import com.albinogames.server.Commands.ICommand.ResultCode;
+import com.albinogames.server.Commands.ModelCommand.*;
 
 /**
  *
@@ -32,7 +35,7 @@ public class Game implements ICommandHandler<GameCommand> {
 
     public Game(int BOARD_SIZE, ICommandHandler<ModelCommand> ch) {
         this.BOARD_SIZE = BOARD_SIZE;
-        this.ID = Identification.ID.GenerateID_Number(6);
+        this.ID = com.albinogames.server.identification.IDGenerator.GenerateID_Number(6);
         this.ch = ch;
     }
 
@@ -46,7 +49,7 @@ public class Game implements ICommandHandler<GameCommand> {
     }
 
     public void ShutdownGame() {
-        Identification.ID.RemoveID(ID);
+        com.albinogames.server.identification.IDGenerator.RemoveID(ID);
         ch.Handle(new RemoveGameCommand(this));
         playerToSocket.clear();
         players.clear();
