@@ -1,0 +1,6 @@
+<?xml version = "1.0" ?>
+<player>
+    <name>admin</name>
+    <gamesplayed>5</gamesplayed>
+    <winper>40%</winper>
+</player>
