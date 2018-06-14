@@ -30,6 +30,7 @@ namespace Dicelocked
         /// </summary>
         private ICommandHandler<ControllerCommand> commandHandler;
         private bool PanelState = false;
+        private double boxSize;
         private enum GridType
         {
             Sign_Up,
@@ -46,6 +47,13 @@ namespace Dicelocked
             commandBacklog = new List<ViewCommand>();
             SetUpTimer();
             InitializeComponent();
+        }
+
+        private double CalculateBoxSize()
+        {
+            double x = 0;
+            x = Height / 6;
+            return x;
         }
 
         public ICommandHandler<ControllerCommand> CommandHandler
@@ -348,6 +356,76 @@ namespace Dicelocked
                 SignIn_Grid.Background = new SolidColorBrush(Colors.DarkRed);
             }
             PanelState = !PanelState;
+        }
+        /// <summary>
+        /// Runs through all the smaller parts of drawing the GUI
+        /// shows the game grid
+        /// Draws both player boards
+        /// TODO: draw healthbars
+        /// </summary>
+        private void DrawGUI()
+        {
+            boxSize = CalculateBoxSize();
+            // set the Canvas to the correct grid
+            ShowGameGrid();
+            // draw the players board on the left of the screen
+            DrawPlayerBoard();
+            // draw the opponents board on the right of the screen
+        }
+
+        private void DrawPlayerBoard()
+        {
+            float x = (float)(0.12f * Width);
+            float y = (float)(1.5f * boxSize);
+            DrawBoard(x, y);
+        }
+
+        private void DrawBoard(float x, float y)
+        {
+            DrawGridSection(x, y, string.Empty);
+            // iteratively move accross the screen drawing squares of boxSize 9 times
+            // makes a 3x3 grid
+        }
+        private void DrawGridSection(float x, float y, string s)
+        {
+            DrawSquare();
+            PositionSquare(s, x, y);
+        }
+        private void DrawSquare()
+        {
+            Rectangle r = new Rectangle();
+            r.Width = boxSize;
+            r.Height = boxSize;
+            r.Name = "PlayerRectangle1";
+            r.Fill = new SolidColorBrush(Colors.Transparent);
+            r.Stroke = new SolidColorBrush(Colors.Black);
+            r.StrokeThickness = 4;
+            Game_Grid.Children.Add(r);
+        }
+        private void PositionSquare(string s, float x, float y)
+        {
+            ///find square by name (string s)
+            ///move it to the position given
+            ///DONE
+            //throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Collapses the WaitingGamePanel and makes the GameGrid visibile
+        /// </summary>
+        private void ShowGameGrid()
+        {
+            Waiting_Panel.Visibility = Visibility.Collapsed;
+            Game_Grid.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Event handler for the AIGamebutton on click event
+        /// Calls DrawGUI
+        /// </summary>
+        /// <param name="sender">The object who called the event</param>
+        /// <param name="e">The event args</param>
+        private void AIGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawGUI();
         }
     }
 }
