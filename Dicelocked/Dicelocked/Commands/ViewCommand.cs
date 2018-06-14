@@ -32,23 +32,6 @@ namespace Dicelocked.Commands
         }
     }
 
-    public class UpdateButtonTextCommand : ViewCommand
-    {
-        string buttonText;
-        Button button;
-        public UpdateButtonTextCommand(string buttonText, Button button)
-        {
-            this.buttonText = buttonText;
-            this.button = button;
-        }
-
-        public override Result execution(GUIView commandHandler)
-        {
-            commandHandler.UpdateButtonContent(button, buttonText);
-            return Result.success;
-        }
-    }
-
     public class AskForNameCommand : ViewCommand
     {
         public override Result execution(GUIView commandHandler)

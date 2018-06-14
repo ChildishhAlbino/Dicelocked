@@ -29,6 +29,7 @@ namespace Dicelocked
         /// private variable for commandHandler;
         /// </summary>
         private ICommandHandler<ControllerCommand> commandHandler;
+        private bool PanelState = false;
         private enum GridType
         {
             Sign_Up,
@@ -318,6 +319,35 @@ namespace Dicelocked
         {
             PreGame_Panel.Visibility = Visibility.Visible;
             Waiting_Panel.Visibility = Visibility.Collapsed;
+        }
+        /// <summary>
+        /// The event handler for the toggle button on click event
+        /// </summary>
+        /// <param name="sender">The object that called this event</param>
+        /// <param name="e">The event args</param>
+        private void ToggleColoursButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleColours();
+        }
+        /// <summary>
+        /// The method that toggles the background colours
+        /// Checks a boolean value and does one of the two statements
+        /// Each statement inverts the colours between DarkRed and DarkCyan
+        /// The last line inverts the boolean so that will keep toggling.
+        /// </summary>
+        private void ToggleColours()
+        {
+            if (PanelState)
+            {
+                SignUp_Grid.Background = new SolidColorBrush(Colors.DarkRed);
+                SignIn_Grid.Background = new SolidColorBrush(Colors.DarkCyan);
+            }
+            else
+            {
+                SignUp_Grid.Background = new SolidColorBrush(Colors.DarkCyan);
+                SignIn_Grid.Background = new SolidColorBrush(Colors.DarkRed);
+            }
+            PanelState = !PanelState;
         }
     }
 }

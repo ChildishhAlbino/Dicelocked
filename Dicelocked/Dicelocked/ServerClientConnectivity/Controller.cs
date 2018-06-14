@@ -57,8 +57,11 @@ namespace Dicelocked.ServerClientConncetivity
 
         public void Send(string message)
         {
-            message += "\n";
-            connection.Send((message));
+            if(connection != null)
+            {
+                message += "\n";
+                connection.Send((message));
+            }    
         }
 
         public void SetID(string ID)
@@ -95,9 +98,11 @@ namespace Dicelocked.ServerClientConncetivity
         }
         public void DisconnectFromServer()
         {
-            //StartConnecting();
-            connection.Disconnect();
-            connection = null;
+            if(connection != null)
+            {
+                connection.Disconnect();
+                connection = null;
+            } 
         }
     }
 }
