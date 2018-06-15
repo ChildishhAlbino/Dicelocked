@@ -1,9 +1,11 @@
 package com.albinogames.androidapp;
 
+import android.graphics.Typeface;
 import android.support.annotation.RequiresPermission;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Xml;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,12 +27,29 @@ public class Stats_Activity extends AppCompatActivity {
         GamesPlayed,
         WinPer,
     }
+private TextView tvPN;
+private TextView tvWP;
+private TextView tvGP;
+
     private XmlPullParser xpp;
     private Attribute a = Attribute.Empty;
+    boolean font = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_);
+        final Button b = (Button)findViewById(R.id.ToggleFont_Button);
+        tvPN = (TextView)findViewById(R.id.PlayerName_text);
+        tvWP = (TextView)findViewById(R.id.winPer_text);
+        tvGP = (TextView)findViewById(R.id.GamesPlayed_text);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToggleFont();
+            }
+        });
+
+
         ReadXML();
     }
 
@@ -106,18 +125,30 @@ public class Stats_Activity extends AppCompatActivity {
 
     private void DisplayPlayerName(String s){
         // set button text to provided string
-        final TextView tv = (TextView)findViewById(R.id.PlayerName_text);
-        tv.setText(s+":");
+        tvPN.setText(s+":");
     }
 
     private void DisplayGamesPlayed(String s){
         // set button text to provided string
-        final TextView tv = (TextView)findViewById(R.id.GamesPlayed_text);
-        tv.setText("Games Played: "+s);
+        tvWP.setText("Games Played: "+s);
     }
     private void DisplayWinPer(String s){
         // set button text to provided string
-        final TextView tv = (TextView)findViewById(R.id.winPer_text);
-        tv.setText("Win Percentage: "+s);
+        tvGP.setText("Win Percentage: "+s);
+    }
+
+    private void ToggleFont(){
+        Typeface tf = Typeface.DEFAULT;
+        if(font){
+            //set player font to ARIAL
+            tf = Typeface.create("Arial", Typeface.BOLD);
+        }
+        else{
+            //set player font to SOMETHING ELSE
+            tf = getResources().getFont(R.font.eeriot);
+        }
+        System.out.println(tf.toString());
+        font = !font;
+       tvPN.setTypeface(tf);
     }
 }
